@@ -55,8 +55,23 @@ class Controler
             case 'ajouterNouvelleBouteilleCellier':
                 $this->ajouterNouvelleBouteilleCellier();
                 break;
+            case 'listes': //gm
+                $this->listes();
+                break;
             case 'bouteille': //fr
                 $this->ficheBouteille();
+                break;
+            case 'noteBouteille': //fr
+                $this->noteBouteille();
+                break;
+            case 'modifierAAcheter': //fr
+                $this->modifierAAcheter();
+                break;
+            case 'modifierAEssayer': //fr
+                $this->modifierAEssayer();
+                break;
+            case 'modifierFavoris': //fr
+                $this->modifierFavoris();
                 break;
             case 'ajouterBouteilleCellier':
                 $this->ajouterBouteilleCellier();
@@ -94,6 +109,74 @@ class Controler
             case 'statistiques':
                 $this->statistiquesUtilisateur();
                 break;
+            case 'scan':
+                $this->scan();
+            case 'admin':
+                $this->afficherPageAdmin();
+                break;
+            case 'lireAdminBouteilles':
+                $this->lireAdminBouteilles();
+                break;
+            case 'lireAdminCelliers':
+                $this->lireAdminCelliers();
+                break;
+            case 'lireAdminUnCellier':
+                $this->lireAdminUnCellier();
+                break;
+            case 'lireAdminUneBouteille':
+                $this->lireAdminUneBouteille();
+                break;
+            case 'lireAdminUnUsager':
+                $this->lireAdminUnUsager();
+                break;
+            case 'lireAdminUsagers':
+                $this->lireAdminUsagers();
+                break;
+            case 'lireDetailBouteille':
+                $this->lireDetailBouteille();
+                break;
+            case 'lireDetailCellier':
+                $this->lireDetailCellier();
+                break;
+            case 'lireDetailUsager':
+                $this->lireDetailUsager();
+                break;
+            case 'lireDetailVino':
+                $this->lireDetailVino();
+                break;
+            case 'lireFormulaireBouteille':
+                $this->lireFormulaireBouteille();
+                break;
+            case 'lireFormulaireCellier':
+                $this->lireFormulaireCellier();
+                break;
+            case 'lireFormulaireUsager':
+                $this->lireFormulaireUsager();
+                break;
+            case 'lireFormulaireVino':
+                $this->lireFormulaireVino();
+                break;
+            case 'lireTableSelection':
+                $this->lireTableSelection();
+                break;
+            case 'lireTableVino':
+                $this->lireTableVino();
+                break;
+            case 'modifierAdminBouteille':
+                $this->modifierAdminBouteille();
+                break;
+            case 'obtenirTablesNbEnrg':
+                $this->obtenirTablesNbEnrg();
+                break;
+            case 'obtenirVinoTablesNbEnrg':
+                $this->obtenirVinoTablesNbEnrg();
+                break;
+            case 'sauvegarderAdminDonnees':
+                $this->sauvegarderAdminDonnees();
+                break;
+            case 'profilUsager':
+                $this->voirProfilUsager();
+                break;
             case 'accueil':
                 $this->accueil();
                 break;
@@ -108,26 +191,610 @@ class Controler
 
 
     /**
+     * Cette méthode affiche la page principale de l'administrateur
+     *  
+     */
+    private function afficherPageAdmin()
+    {
+        include("vues/entete.php");
+        include("vues/Admin/admin.php");
+        include("vues/pied.php");
+    }
+
+
+    private function lireAdminBouteilles()
+    {
+        if (isset($_SESSION) && isset($_SESSION['utilisateur'])) {
+            $bte = new Bouteille();
+            $listeBouteilles = $bte->getAdminBouteilles();
+            echo json_encode($listeBouteilles);
+        } else {
+            include("vues/entete.php");
+            include("vues/connexion.php");
+            include("vues/pied.php");
+        }
+    }
+
+
+    private function lireAdminCelliers()
+    {
+        if (isset($_SESSION) && isset($_SESSION['utilisateur'])) {
+            $celliers = new Cellier();
+            $listeCelliers = $celliers->getAdminCelliers();
+            echo json_encode($listeCelliers);
+        } else {
+            include("vues/entete.php");
+            include("vues/connexion.php");
+            include("vues/pied.php");
+        }
+    }
+
+
+    private function lireAdminUnCellier()
+    {
+        if (isset($_SESSION) && isset($_SESSION['utilisateur'])) {
+            $body = json_decode(file_get_contents('php://input'), true);
+
+            $celliers = new Cellier();
+            $listeCelliers = $celliers->getAdminUnCellier($body["id_cellier"]);
+            echo json_encode($listeCelliers);
+        } else {
+            include("vues/entete.php");
+            include("vues/connexion.php");
+            include("vues/pied.php");
+        }
+    }
+
+
+    private function lireAdminUneBouteille()
+    {
+        if (isset($_SESSION) && isset($_SESSION['utilisateur'])) {
+            $body = json_decode(file_get_contents('php://input'), true);
+
+            $bte = new Bouteille();
+            $listeBouteilles = $bte->getAdminUneBouteille($body["id_bouteille"]);
+            echo json_encode($listeBouteilles);
+        } else {
+            include("vues/entete.php");
+            include("vues/connexion.php");
+            include("vues/pied.php");
+        }
+    }
+
+
+    private function lireAdminUnUsager()
+    {
+        if (isset($_SESSION) && isset($_SESSION['utilisateur'])) {
+            $body = json_decode(file_get_contents('php://input'), true);
+
+            $usagers = new Usager();
+            $listeUsagers = $usagers->getAdminUnUsager($body["id_usager"]);
+            echo json_encode($listeUsagers);
+        } else {
+            include("vues/entete.php");
+            include("vues/connexion.php");
+            include("vues/pied.php");
+        }
+    }
+
+
+    private function lireAdminUsagers()
+    {
+        if (isset($_SESSION) && isset($_SESSION['utilisateur'])) {
+            $usagers = new Usager();
+            $listeUsagers = $usagers->getAdminUsagers();
+            echo json_encode($listeUsagers);
+        } else {
+            include("vues/entete.php");
+            include("vues/connexion.php");
+            include("vues/pied.php");
+        }
+    }
+
+
+    private function lireDetailBouteille()
+    {
+        if (isset($_SESSION) && isset($_SESSION['utilisateur'])) {
+            $body = json_decode(file_get_contents('php://input'));
+
+            $mode = isset($body->mode) ? $body->mode : "lire";
+            $id = isset($body->id) ? $body->id : null;
+            $url = isset($body->url) ? $body->url : null;
+
+            if ($url) {
+                $saq = new SAQ();
+                $usagerBouteille = $saq->recupereInfo($url);
+            }
+
+            include("vues/Admin/detailBouteille.php");
+        } else {
+            include("vues/entete.php");
+            include("vues/connexion.php");
+            include("vues/pied.php");
+        }
+    }
+
+
+    private function lireDetailCellier()
+    {
+        if (isset($_SESSION) && isset($_SESSION['utilisateur'])) {
+            $body = json_decode(file_get_contents('php://input'));
+            $mode = isset($body->mode) ? $body->mode : "lire";
+            $id = isset($body->id) ? $body->id : null;
+
+            include("vues/Admin/detailCellier.php");
+        } else {
+            include("vues/entete.php");
+            include("vues/connexion.php");
+            include("vues/pied.php");
+        }
+    }
+
+
+    private function lireDetailUsager()
+    {
+        if (isset($_SESSION) && isset($_SESSION['utilisateur'])) {
+            $body = json_decode(file_get_contents('php://input'));
+            $mode = isset($body->mode) ? $body->mode : "lire";
+            $id = isset($body->id) ? $body->id : null;
+
+            include("vues/Admin/detailUsager.php");
+        } else {
+            include("vues/entete.php");
+            include("vues/connexion.php");
+            include("vues/pied.php");
+        }
+    }
+
+
+    private function lireDetailVino()
+    {
+        if (isset($_SESSION) && isset($_SESSION['utilisateur'])) {
+            $body = json_decode(file_get_contents('php://input'));
+            $mode = isset($body->mode) ? $body->mode : "lire";
+            $id = isset($body->id) ? $body->id : null;
+            $nomTable = isset($body->nomTable) ? $body->nomTable : null;
+
+            switch ($nomTable) {
+                case 'vino__bouteille':
+                    include("vues/Admin/vinoBouteille.php");
+                    break;
+
+                case 'vino__degre_alcool':
+                    include("vues/Admin/vinoDegreAlcool.php");
+                    break;
+
+                case 'vino__format':
+                    include("vues/Admin/vinoFormat.php");
+                    break;
+
+                case 'generique__pays':
+                    include("vues/Admin/vinoPays.php");
+                    break;
+
+                case 'vino__taux_de_sucre':
+                    include("vues/Admin/vinoTauxSucre.php");
+                    break;
+
+                case 'vino__type_cellier':
+                    include("vues/Admin/vinoTypeCellier.php");
+                    break;
+
+                default:
+                    include("vues/Admin/detailVino.php");
+                    break;
+            }
+        } else {
+            include("vues/entete.php");
+            include("vues/connexion.php");
+            include("vues/pied.php");
+        }
+    }
+
+
+    private function lireFormulaireBouteille()
+    {
+        if (isset($_SESSION) && isset($_SESSION['utilisateur'])) {
+            include('vues/Admin/formulaireBouteille.php');
+        } else {
+            include("vues/entete.php");
+            include("vues/connexion.php");
+            include("vues/pied.php");
+        }
+    }
+
+
+    private function lireFormulaireCellier()
+    {
+        if (isset($_SESSION) && isset($_SESSION['utilisateur'])) {
+            include('vues/Admin/formulaireCellier.php');
+        } else {
+            include("vues/entete.php");
+            include("vues/connexion.php");
+            include("vues/pied.php");
+        }
+    }
+
+
+    private function lireFormulaireUsager()
+    {
+        if (isset($_SESSION) && isset($_SESSION['utilisateur'])) {
+            include('vues/Admin/formulaireUsager.php');
+        } else {
+            include("vues/entete.php");
+            include("vues/connexion.php");
+            include("vues/pied.php");
+        }
+    }
+
+
+    private function lireFormulaireVino()
+    {
+        if (isset($_SESSION) && isset($_SESSION['utilisateur'])) {
+            $body = json_decode(file_get_contents('php://input'));
+            $nomTable = $body->nomTable;
+
+            include('vues/Admin/formulaireVino.php');
+        } else {
+            include("vues/entete.php");
+            include("vues/connexion.php");
+            include("vues/pied.php");
+        }
+    }
+
+
+    private function lireTableSelection()
+    {
+        if (isset($_SESSION) && isset($_SESSION['utilisateur'])) {
+            include("vues/Admin/tableSelection.php");
+        } else {
+            include("vues/entete.php");
+            include("vues/connexion.php");
+            include("vues/pied.php");
+        }
+    }
+
+
+    private function lireTableVino()
+    {
+        if (isset($_SESSION) && isset($_SESSION['utilisateur'])) {
+            $body = json_decode(file_get_contents('php://input'));
+            $vino = new Vino();
+
+            $nomTable = $body->nomTable;
+            $id = isset($body->id) ? $body->id : null;
+
+            $liste = $vino->lireTable($nomTable, $id);
+            echo json_encode($liste);
+        } else {
+            include("vues/entete.php");
+            include("vues/connexion.php");
+            include("vues/pied.php");
+        }
+    }
+
+
+    private function modifierAdminBouteille()
+    {
+        if (isset($_SESSION) && isset($_SESSION['utilisateur'])) {
+            $donnees = json_decode(file_get_contents('php://input'));
+
+            $bte = new Bouteille();
+            $res = $bte->modifierAdminBouteille($donnees);
+            echo json_encode($res);
+        } else {
+            include("vues/entete.php");
+            include("vues/connexion.php");
+            include("vues/pied.php");
+        }
+    }
+
+
+    private function obtenirTablesNbEnrg()
+    {
+        $oUsager = new Usager();
+        $nbUsagers = $oUsager->getAdminNbUsagers();
+
+        $oCellier = new Cellier();
+        $nbCelliers = $oCellier->getAdminNbCelliers();
+
+        $oBouteille = new Bouteille();
+        $nbBouteilles = $oBouteille->getAdminNbBouteilles();
+
+        $res = array(
+            "nbBouteilles" => $nbBouteilles,
+            "nbCelliers" => $nbCelliers,
+            "nbUsagers" => $nbUsagers
+        );
+
+        echo json_encode($res);
+    }
+
+
+    private function obtenirVinoTablesNbEnrg()
+    {
+        $oVino = new Vino();
+
+        $aAppellations = $oVino->lireAppellations();
+        $aBouteilles = $oVino->lireBouteilles();
+        $aCepages = $oVino->lireCepages();
+        $aClassifications = $oVino->lireClassifications();
+        $aDegresAlcool = $oVino->lireDegresAlcool();
+        $aDesignations = $oVino->lireDesignations();
+        $aFormats = $oVino->lireFormats();
+        $aPays = $oVino->lirePays();
+        $aProduitsQc = $oVino->lireProduitsQc();
+        $aRegions = $oVino->lireRegions();
+        $aTauxDeSucre = $oVino->lireTauxDeSucre();
+        $aTypesCellier = $oVino->lireTypesCellier();
+        $aTypesVin = $oVino->lireTypesVin();
+
+        $res = array(
+            "vino__appellation" => count($aAppellations),
+            "vino__bouteille" => count($aBouteilles),
+            "vino__cepage" => count($aCepages),
+            "vino__classification" => count($aClassifications),
+            "vino__degre_alcool" => count($aDegresAlcool),
+            "vino__designation" => count($aDesignations),
+            "vino__format" => count($aFormats),
+            "generique__pays" => count($aPays),
+            "vino__produit_du_quebec" => count($aProduitsQc),
+            "vino__region" => count($aRegions),
+            "vino__taux_de_sucre" => count($aTauxDeSucre),
+            "vino__type_cellier" => count($aTypesCellier),
+            "vino__type" => count($aTypesVin)
+        );
+
+        echo json_encode($res);
+    }
+
+
+    private function sauvegarderAdminDonnees()
+    {
+        if (isset($_SESSION) && isset($_SESSION['utilisateur'])) {
+            $body = json_decode(file_get_contents('php://input'));
+
+            $nomTable = $body->nomTable;
+            $action = $body->action;
+            $donnees = $body->donnees;
+
+            switch ($nomTable) {
+                case "bouteille":
+                    $bte = new Bouteille();
+
+                    if ($action == "ajouter") {
+                        $res = $bte->ajouterAdminBouteille($donnees);
+                    } else if ($action == "modifier") {
+                        $res = $bte->modifierAdminBouteille($donnees);
+                    }
+
+                    break;
+
+                case "cellier":
+                    $cellier = new Cellier();
+
+                    if ($action == "ajouter") {
+                        $res = $cellier->ajouterAdminCellier($donnees);
+                    } else if ($action == "modifier") {
+                        $res = $cellier->modifierAdminCellier($donnees);
+                    }
+
+                    break;
+
+                case "usager":
+                    $usager = new Usager();
+
+                    if ($action == "ajouter") {
+                        $res = $usager->ajouterAdminUsager($donnees);
+                    } else if ($action == "modifier") {
+                        $res = $usager->modifierAdminUsager($donnees);
+                    }
+
+                    break;
+
+                case "vino__appellation":
+                    $vino = new Vino();
+
+                    if ($action == "ajouter") {
+                        $res = $vino->ajouterAppellation($donnees);
+                    } else if ($action == "modifier") {
+                        $res = $vino->modifierAppellation($donnees);
+                    }
+
+                    break;
+
+                case "vino__bouteille":
+                    $vino = new Vino();
+
+                    if ($action == "ajouter") {
+                        $res = $vino->ajouterBouteille($donnees);
+                    } else if ($action == "modifier") {
+                        $res = $vino->modifierBouteille($donnees);
+                    }
+
+                    break;
+
+                case "vino__cepage":
+                    $vino = new Vino();
+
+                    if ($action == "ajouter") {
+                        $res = $vino->ajouterCepage($donnees);
+                    } else if ($action == "modifier") {
+                        $res = $vino->modifierCepage($donnees);
+                    }
+
+                    break;
+
+                case "vino__classification":
+                    $vino = new Vino();
+
+                    if ($action == "ajouter") {
+                        $res = $vino->ajouterClassification($donnees);
+                    } else if ($action == "modifier") {
+                        $res = $vino->modifierClassification($donnees);
+                    }
+
+                    break;
+
+                case "vino__degre_alcool":
+                    $vino = new Vino();
+
+                    if ($action == "ajouter") {
+                        $res = $vino->ajouterDegreAlcool($donnees);
+                    } else if ($action == "modifier") {
+                        $res = $vino->modifierDegreAlcool($donnees);
+                    }
+
+                    break;
+
+                case "vino__designation":
+                    $vino = new Vino();
+
+                    if ($action == "ajouter") {
+                        $res = $vino->ajouterDesignation($donnees);
+                    } else if ($action == "modifier") {
+                        $res = $vino->modifierDesignation($donnees);
+                    }
+
+                    break;
+
+                case "vino__format":
+                    $vino = new Vino();
+
+                    if ($action == "ajouter") {
+                        $res = $vino->ajouterFormat($donnees);
+                    } else if ($action == "modifier") {
+                        $res = $vino->modifierFormat($donnees);
+                    }
+
+                    break;
+
+                case "generique__pays":
+                    $vino = new Vino();
+
+                    if ($action == "ajouter") {
+                        $res = $vino->ajouterPays($donnees);
+                    } else if ($action == "modifier") {
+                        $res = $vino->modifierPays($donnees);
+                    }
+
+                    break;
+
+                case "vino__produit_du_quebec":
+                    $vino = new Vino();
+
+                    if ($action == "ajouter") {
+                        $res = $vino->ajouterProduitQc($donnees);
+                    } else if ($action == "modifier") {
+                        $res = $vino->modifierProduitQc($donnees);
+                    }
+
+                    break;
+
+                case "vino__region":
+                    $vino = new Vino();
+
+                    if ($action == "ajouter") {
+                        $res = $vino->ajouterRegion($donnees);
+                    } else if ($action == "modifier") {
+                        $res = $vino->modifierRegion($donnees);
+                    }
+
+                    break;
+
+                case "vino__taux_de_sucre":
+                    $vino = new Vino();
+
+                    if ($action == "ajouter") {
+                        $res = $vino->ajouterTauxSucre($donnees);
+                    } else if ($action == "modifier") {
+                        $res = $vino->modifierTauxSucre($donnees);
+                    }
+
+                    break;
+
+                case "vino__type_cellier":
+                    $vino = new Vino();
+
+                    if ($action == "ajouter") {
+                        $res = $vino->ajouterTypeCellier($donnees);
+                    } else if ($action == "modifier") {
+                        $res = $vino->modifierTypeCellier($donnees);
+                    }
+
+                    break;
+
+                case "vino__type":
+                    $vino = new Vino();
+
+                    if ($action == "ajouter") {
+                        $res = $vino->ajouterTypeVin($donnees);
+                    } else if ($action == "modifier") {
+                        $res = $vino->modifierTypeVin($donnees);
+                    }
+
+                    break;
+
+                default:
+                    break;
+            }
+
+            echo json_encode($res);
+        } else {
+            include("vues/entete.php");
+            include("vues/connexion.php");
+            include("vues/pied.php");
+        }
+    }
+
+
+    /**
      * Cette méthode renvoi selon si l'utilisateur est connecté ou non
      * la bonne page d'accueil
      *  
      */
     private function accueil()
     {
-        include("vues/entete.php");
-
         if (isset($_SESSION) && isset($_SESSION['utilisateur'])) {
             $id = $_SESSION['utilisateur']['id'];
-            $celliers = new Cellier();
+            $type = $_SESSION['utilisateur']['type'];
 
-            $data = $celliers->getListeCellier($id);
-            $nombre_cellier = $celliers->nombreCellierUsager($id);
-            include("vues/index.php");
+            if ($type == 2) {
+                include("vues/Admin/admin.php");
+            } else {
+                $celliers = new Cellier();
+
+                $data = $celliers->getListeCellier($id);
+                $nombre_cellier = $celliers->nombreCellierUsager($id);
+                $bouteille_total = 0;
+                $prix_total = 0;
+                foreach ($data as $cellier) {
+
+                    $bouteille_total += $cellier['bouteille_total'];
+                    $prix_total += $cellier['prix_total'];
+                }
+                $total = $prix_total * $bouteille_total;
+
+
+                $stats = new Statistique();
+                $bouteillesBues = 0;
+                $actionsBues = $stats->getBouteilleBues($id);
+
+                foreach ($actionsBues as $bues) {
+                    $bouteillesBues += $bues['quantite_bouteille'];
+                }
+                $bouteillesAchetees = 0;
+                $actionsAjouts = $stats->getBouteilleAjouts($id);
+                foreach ($actionsAjouts as $achetees) {
+                    $bouteillesAchetees += $achetees['quantite_bouteille'];
+                }
+                include("vues/index.php");
+            }
         } else {
+            include("vues/entete.php");
             include("vues/connexion.php");
+            include("vues/pied.php");
         }
-
-        include("vues/pied.php");
     }
 
 
@@ -136,7 +803,7 @@ class Controler
         $body = json_decode(file_get_contents('php://input'));
 
         $bte = new Bouteille();
-        $resultat = $bte->modifierQuantiteBouteilleCellier($body->id, 1);
+        $resultat = $bte->modifierQuantiteBouteilleCellier($body->id_usager, $body->id, 1, "a");
     }
 
 
@@ -188,10 +855,11 @@ class Controler
      */
     private function ajouterQteBouteille()
     {
+        $id_usager = $_SESSION['utilisateur']['id'];
         $body = json_decode(file_get_contents('php://input'));
 
         $bte = new Bouteille();
-        $resultat = $bte->modifierQuantiteBouteilleCellier($body->id, 1);
+        $resultat = $bte->modifierQuantiteBouteilleCellier($id_usager, $body->id, 1, "a");
     }
 
 
@@ -212,7 +880,7 @@ class Controler
         $body = json_decode(file_get_contents('php://input'));
 
         $bte = new Bouteille();
-        $resultat = $bte->modifierQuantiteBouteilleCellier($body->id, -1);
+        $resultat = $bte->modifierQuantiteBouteilleCellier($body->id_usager, $body->id, 1, "d");
     }
 
 
@@ -243,11 +911,17 @@ class Controler
      * et supprime le cellier selon l'id_cellier envoyé dans l'url 
      *  
      */
+    /**
+     * Cette méthode déplace toutes les bouteilles d'un cellier à l'autre selon l'id_cellier choisi
+     * et supprime le cellier selon l'id_cellier envoyé dans l'url 
+     *  
+     */
     private function deplacerSupprimer()
     {
 
         $body = json_decode(file_get_contents('php://input'));
         $id = $body->id_cellierSupprime;
+
         if (!empty($body)) {
 
             $bte = new Bouteille();
@@ -256,8 +930,9 @@ class Controler
 
                 $cellier = new Cellier();
                 $resultat = $cellier->deplacerBouteillesCellier($body->id_cellierChoisi, $bouteilles);
+
                 if ($resultat) {
-                    $resultat =   $cellier->supprimerCellier($id);
+                    $resultat = $cellier->supprimerCellier($id);
                 }
             }
         }
@@ -303,6 +978,112 @@ class Controler
         include("vues/pied.php");
     }
 
+    // Ajouter la note à une bouteille
+    private function noteBouteille()
+    {
+        $body = json_decode(file_get_contents('php://input'));
+
+        if (!empty($body)) {
+            $bouteille = new Bouteille();
+
+            $resultat = $bouteille->noteBouteille($body->note, $body->id_bouteille);
+
+            if ($resultat) {
+                return $this->returnJsonHttpResponse(true, true);
+            }
+        }
+
+        return $this->returnJsonHttpResponse(false, null);
+    }
+
+    // Bouteille à acheter (rendre oui ou non)
+    private function modifierAAcheter()
+    {
+        $body = json_decode(file_get_contents('php://input'));
+
+        if (!empty($body)) {
+            $bouteille = new Bouteille();
+
+            if (isset($body->vino_id) && $body->vino_id) {
+                $usager_bouteille  = $bouteille->copierVinoDansUsagerBouteillle($body->vino_id);
+                if ($usager_bouteille) {
+                    $resultat = $bouteille->modifierAAcheter($body->valeur, $usager_bouteille['id_bouteille'], null);
+                    if ($resultat) {
+                        return $this->returnJsonHttpResponse(true, ['id_bouteille' => $usager_bouteille['id_bouteille']]);
+                    }
+                }
+            } else {
+                $resultat = $bouteille->modifierAAcheter($body->valeur, $body->id_bouteille, $body->id_cellier);
+                if ($resultat) {
+                    return $this->returnJsonHttpResponse(true, ['id_bouteille' => $body->id_bouteille]);
+                }
+            }
+        }
+
+        return $this->returnJsonHttpResponse(false, null);
+    }
+
+    // Bouteille à essayer (rendre oui ou non)
+    private function modifierAEssayer()
+    {
+        $body = json_decode(file_get_contents('php://input'));
+
+        if (!empty($body)) {
+            $bouteille = new Bouteille();
+
+            if (isset($body->vino_id) && $body->vino_id) {
+                $usager_bouteille  = $bouteille->copierVinoDansUsagerBouteillle($body->vino_id);
+                if ($usager_bouteille) {
+                    $resultat = $bouteille->modifierAEssayer($body->valeur, $usager_bouteille['id_bouteille'], null);
+                    if ($resultat) {
+                        return $this->returnJsonHttpResponse(true, ['id_bouteille' => $usager_bouteille['id_bouteille']]);
+                    }
+                }
+            } else {
+                $resultat = $bouteille->modifierAEssayer($body->valeur, $body->id_bouteille, $body->id_cellier);
+                if ($resultat) {
+                    return $this->returnJsonHttpResponse(true, ['id_bouteille' => $body->id_bouteille]);
+                }
+            }
+
+            if ($resultat) {
+                return $this->returnJsonHttpResponse(true, true);
+            }
+        }
+
+        return $this->returnJsonHttpResponse(false, null);
+    }
+
+    // Bouteille favoris (rendre oui ou non)
+    private function modifierFavoris()
+    {
+        $body = json_decode(file_get_contents('php://input'));
+
+        if (!empty($body)) {
+            $bouteille = new Bouteille();
+            // récupérer bouteille depuis vinno__bouteille et insérer dans usager__bouteille
+            if (isset($body->vino_id) && $body->vino_id) {
+                $usager_bouteille  = $bouteille->copierVinoDansUsagerBouteillle($body->vino_id);
+                if ($usager_bouteille) {
+                    $resultat = $bouteille->modifierFavoris($body->valeur, $usager_bouteille['id_bouteille'], null);
+                    if ($resultat) {
+                        return $this->returnJsonHttpResponse(true, ['id_bouteille' => $usager_bouteille['id_bouteille']]);
+                    }
+                }
+            } else {
+                $resultat = $bouteille->modifierFavoris($body->valeur, $body->id_bouteille, $body->id_cellier);
+                if ($resultat) {
+                    return $this->returnJsonHttpResponse(true, ['id_bouteille' => $body->id_bouteille]);
+                }
+            }
+
+            if ($resultat) {
+                return $this->returnJsonHttpResponse(true, true);
+            }
+        }
+
+        return $this->returnJsonHttpResponse(false, null);
+    }
 
     private function ficheBouteille()
     {
@@ -311,19 +1092,37 @@ class Controler
             return;
         }
 
+        $id_usager = $_SESSION['utilisateur']['id'];
         $id_cellier = isset($_GET['id_cellier']) ? $_GET['id_cellier'] : null;
         $id_bouteille = isset($_GET['id_bouteille']) ? $_GET['id_bouteille'] : null;
+        $vino_id = isset($_GET['vino_id']) ? $_GET['vino_id'] : null;
         $message = isset($_GET['message']) ? $_GET['message'] : null;
 
-
         if ($id_bouteille) {
-            $bouteille = (new Bouteille());
+
+            $bouteille = new Bouteille();
+
             $bouteille = $bouteille->getOneBouteille($id_bouteille, $id_cellier);
             if (is_array($bouteille) && count($bouteille) > 0) {
                 $bouteille = $bouteille[0];
             }
+        } else {
+            if (isset($vino_id) && $vino_id != null) {
+                $idB = new Cellier;
+                $id_bouteille = $idB->getBouteilleCUP($vino_id);
+
+                $bouteille = new Bouteille();
+
+                $bouteille = $bouteille->getOneBouteilleFromVino($id_bouteille);
+                if (is_array($bouteille) && count($bouteille) > 0) {
+                    $bouteille = $bouteille[0];
+                    $id_bouteille = $bouteille['id_bouteille'];
+                    $vino_id = $bouteille['id_bouteille'];
+                }
+            }
         }
 
+        //            print_r($bouteille); die();
 
         $body = json_decode(file_get_contents('php://input'));
 
@@ -331,7 +1130,7 @@ class Controler
         $bouteilles = $list->getList('bouteille');
         $usager_celliers = $list->getList('usager_cellier');
         $usager_bouteille = $list->getList('usager_bouteille');
-
+        //var_dump($usager_bouteille);exit;
         $pays = $list->getList('pays');
         $regions = $list->getList('region');
         $types = $list->getList('type');
@@ -373,13 +1172,15 @@ class Controler
             $bouteille = new Bouteille();
 
             $resultat = $bouteille->getOneBouteilleByName($body->nom);
+
+
             if (count($resultat) > 0) {
                 return $this->returnJsonHttpResponse(true, $resultat[0]);
             }
         }
+
         return $this->returnJsonHttpResponse(false, null);
     }
-
 
     /**
      * Cette méthode appelle la fonction pour récupérer la liste des bouteilles dans un cellier
@@ -388,6 +1189,7 @@ class Controler
      */
     private function listerBouteilleCellier()
     {
+        $id_usager = $_SESSION['utilisateur']['id'];
         if (filter_has_var(INPUT_GET, 'id_cellier')) {
 
             $id_cellier = filter_var($_GET['id_cellier'], FILTER_SANITIZE_NUMBER_INT);
@@ -402,36 +1204,47 @@ class Controler
         include("vues/pied.php");
     }
 
-
+    /**
+     * Cette méthode affiche les listes
+     * 
+     */
+    private function listes()
+    {
+        include("vues/entete.php");
+        include("vues/listes.php");
+        include("vues/pied.php");
+    }
     /**
      * Cette méthode récupère la liste des celliers d'un usager ainsi que le nombre de cellier par usager
      * avec l'id session de l'usager
      */
     private function listeCelliers()
     {
+        include("vues/entete.php");
 
-        $id = $_SESSION['utilisateur']['id'];
+        if (isset($_SESSION) && isset($_SESSION['utilisateur'])) {
+            $id = $_SESSION['utilisateur']['id'];
+            $celliers = new Cellier();
 
-        $celliers = new Cellier();
+            $data = $celliers->getListeCellier($id);
+            $nombre_cellier = $celliers->nombreCellierUsager($id);
 
-        $data = $celliers->getListeCellier($id);
-        $nombre_cellier = $celliers->nombreCellierUsager($id);
+            // Si le nombre de cellier est égal à 10
+            if ($nombre_cellier == '10') {
 
-        // Si le nombre de cellier est égal à 10
-        if ($nombre_cellier == '10') {
-
-            $erreur = "Vous avez atteint le maximum de celliers disponibles (10).";
+                $erreur = "Vous avez atteint le maximum de celliers disponibles (10).";
+            } else {
+                $erreur = "";
+            }
+            include("vues/Celliers/celliers.php");
         } else {
-            $erreur = "";
+            include("vues/connecter.php");
         }
 
-
-        include("vues/entete.php");
-        include("vues/Celliers/celliers.php");
         include("vues/pied.php");
     }
 
-     /**
+    /**
      * Cette méthode récupère la liste des celliers selon l'id de l'utilisateur
      *  
      */
@@ -443,8 +1256,7 @@ class Controler
 
         $data = $celliers->getListeCellier($id);
 
-
-        echo json_encode($data);
+        echo json_encode($data, \JSON_UNESCAPED_UNICODE);
     }
 
 
@@ -470,7 +1282,8 @@ class Controler
      * Cette méthode affiche la page du profil de l'utilisateur
      *  
      */
-    private function profilUtilisateur(){
+    private function profilUtilisateur()
+    {
 
         include("vues/entete.php");
         include("vues/profil.php");
@@ -481,6 +1294,8 @@ class Controler
     private function rechercher()
     {
         if (isset($_SESSION) && isset($_SESSION['utilisateur'])) {
+            $id_usager = $_SESSION['utilisateur']['id'];
+
             include("vues/entete.php");
             include("vues/recherche.php");
             include("vues/pied.php");
@@ -533,9 +1348,10 @@ class Controler
      */
     private function reduireQteBouteille()
     {
+        $id_usager = $_SESSION['utilisateur']['id'];
         $body = json_decode(file_get_contents('php://input'));
         $bte = new Bouteille();
-        $resultat = $bte->modifierQuantiteBouteilleCellier($body->id, -1);
+        $resultat = $bte->modifierQuantiteBouteilleCellier($id_usager, $body->id, 1, "d");
     }
 
 
@@ -568,13 +1384,107 @@ class Controler
         exit();
     }
 
+    private function scan()
+    {
+        header('Content-Type: application/json');
+        $body = json_decode(file_get_contents('php://input'));
+
+        $id_bouteille = new Cellier;
+        $id = $id_bouteille->getBouteilleCUP($body->scan_resultat);
+
+        //$objet = json_encode($id,true);
+        //var_dump($objet);
+
+        //exit(header("Location:index.php?requete=bouteille&vino_id=".$id));
+
+        echo json_encode($id);
+    }
+
     /**
      * Cette méthode affiche les statistiques d'un usager
      *  
      */
-    private function statistiquesUtilisateur(){
+    private function statistiquesUtilisateur()
+    {
 
-        
+
+        $jan = $fev = $mar = $avr = $mai = $jun = $jui = $aout = $sept = $oct = $nov = $dec = 0;
+        $mois = [
+            '01' => ['Jan' => $jan],
+            '02' => ['Fev' => $fev],
+            '03' => ['Mar' => $mar],
+            '04' => ['Avr' => $avr],
+            '05' => ['Mai' => $mai],
+            '06' => ['Juin' => $jun],
+            '07' => ['Juill' => $jui],
+            '08' => ['Août' => $aout],
+            '09' => ['Sept' => $sept],
+            '10' => ['Oct' => $oct],
+            '11' => ['Nov' => $nov],
+            '12' => ['Dec' => $dec],
+
+        ];
+
+        $id_cellier = 0;
+
+        $id_usager = $_SESSION['utilisateur']['id'];
+        $bouteilles_bues = 0;
+        $bouteilles_achat = 0;
+
+        $celliers = new Cellier();
+        $data = $celliers->getListeCellier($id_usager);
+
+        // Valeur de tous les celliers
+        $bouteille_total = 0;
+        $prix_total = 0;
+        foreach ($data as $cellier) {
+            $bouteille_total += $cellier['bouteille_total'];
+            $prix_total += $cellier['prix_total'];
+        }
+        $total = $prix_total * $bouteille_total;
+
+        //echo json_encode($data);
+
+
+        $stats = new Statistique();
+
+        //TYPE DE VIN
+        $types = $stats->getTypeVinCellier($id_usager, $id_cellier);
+
+        // BOUTEILLES BUES
+        $actionsBues = $stats->getBouteilleBues($id_usager);
+
+        $moisBue = $mois;
+        foreach ($actionsBues as $actionBue) {
+            $bouteilles_bues += $actionBue['quantite_bouteille'];
+            foreach ($moisBue as $cle => $valeur) {
+
+                if ($actionBue['date_creation'][1] === $cle) {
+                    foreach ($valeur as $val => $nbre) {
+
+                        $nbre += $actionBue['quantite_bouteille'];
+                        $moisBue[$cle][$val] = $nbre;
+                    }
+                }
+            }
+        }
+
+        // BOUTEILLES AJOUTÉES
+        $actionsAjouts = $stats->getBouteilleAjouts($id_usager);
+        foreach ($actionsAjouts as $actionAjout) {
+            $bouteilles_achat += $actionAjout['quantite_bouteille'];
+            foreach ($mois as $cle => $valeur) {
+
+                if ($actionAjout['date_creation'][1] === $cle) {
+                    foreach ($valeur as $val => $nbre) {
+
+                        $nbre += $actionAjout['quantite_bouteille'];
+                        $mois[$cle][$val] = $nbre;
+                    }
+                }
+            }
+        }
+        $bouteilles = $stats->getInfosBouteilleUsager($id_usager, $id_cellier);
         include("vues/entete.php");
         include("vues/statistiques.php");
         include("vues/pied.php");
@@ -587,11 +1497,35 @@ class Controler
     private function supprimerCellier()
     {
         $body = json_decode(file_get_contents('php://input'));
-
-        if (!empty($body)) {
-
+        $id = $body->id_cellierSupprime;
+        $bte = new Bouteille();
+        $bouteilles = $bte->getListeBouteilleCellier($body->id_cellierSupprime);
+        if (count($bouteilles) > 0) {
             $cellier = new Cellier();
-            $cellier->supprimerCellier($body->id);
+            $resultat = $cellier->deplacerBouteillesCellier($body->id_cellierChoisi, $bouteilles);
+
+            $cellier->supprimerCellier($id);
+        } else {
+            $cellier = new Cellier();
+            $cellier->supprimerCellier($id);
+        }
+    }
+
+    private function voirProfilUsager()
+    {
+        if (isset($_SESSION) && isset($_SESSION['utilisateur'])) {
+            $id_usager = $_SESSION['utilisateur']['id'];
+
+            $usagers = new Usager();
+            $unUsager = $usagers->lireUsager($id_usager)[0];
+
+            include("vues/entete.php");
+            include("vues/profilUsager.php");
+            include("vues/pied.php");
+        } else {
+            include("vues/entete.php");
+            include("vues/connexion.php");
+            include("vues/pied.php");
         }
     }
 }

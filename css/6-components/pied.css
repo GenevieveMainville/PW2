@@ -25,19 +25,13 @@
     display: flex;
     justify-content: space-between;
     padding-bottom: var(--espace-p);
+    flex-direction: column; 
   
 }
-@media only screen and (min-width: 1024px){
-    .pied__logo{
-       flex-direction: column; 
-       padding-bottom: 0;
-       justify-content: unset;
-    }
-}
+
 .pied__logo-stitre{
     font-size: 0.8rem;
     letter-spacing: 3px;
-    align-self: center;
     text-transform: uppercase;
 }
 @media only screen and (min-width: 1024px){
@@ -55,6 +49,17 @@
 @media only screen and (min-width: 1024px){
     .pied__listes{
        width: 50%;
+       
+    }
+}
+.pied__listes-nc{
+    display: flex;
+    flex-direction: row;
+}
+@media only screen and (min-width: 1024px){
+    .pied__listes-nc{
+       
+       justify-content: flex-end;
     }
 }
 .pied__liste{
@@ -62,19 +67,22 @@
     font-size: var(--police-p);
     color: var(--couleur-primaire);
     flex-direction: column;
-    line-height: 27px;
+    line-height: 30px;
+    
 }
 
 /* || Lien */
 .pied__liens{
     color: var(--couleur-primaire);
     cursor: pointer;
-    padding: var(--espace-xp);
+    padding: var(--espace-xp) 0;
 }
 .pied__liens:hover{
     color: var(--couleur-accent);
 }
-
+.pied__liens-icones{
+    padding-right: var(--espace-p);
+}
 /* || Icone */
 .pied__icone{
     fill: var(--couleur-primaire);

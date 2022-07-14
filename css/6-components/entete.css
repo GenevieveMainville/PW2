@@ -6,7 +6,6 @@
     }
 }
 
-
 .entete__icone{
     fill: var(--couleur-primaire);  
 }
@@ -14,4 +13,10 @@
     display: flex;
     justify-content: right;
     background-color:var(--couleur-secondaire);
+}
+.contenu-scan-on{
+    display:none
+}
+.contenu-scan-off{
+    display: block;
 }

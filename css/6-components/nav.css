@@ -29,6 +29,41 @@
     text-transform: uppercase;
     
 }
+
 .nav__lien:hover{
     color: var(--couleur-accent);
+}
+.nav__deroule{
+    position: relative;
+    display: inline-block;
+}
+.nav__deroule-btn{
+   padding: var(--espace-xp) 0;
+   cursor: pointer;
+}
+.nav__deroule-contenu{
+    display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+  border: 1px solid var(--couleur-intermediaire-foncee);
+}
+.nav__deroule-contenu a{
+    color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+.nav__deroule-contenu a:hover{
+    background-color: var(--couleur-secondaire);
+    color: var(--couleur-primaire);
+    cursor: pointer;
+}
+.nav__deroule:hover .nav__deroule-contenu {
+    display: block;
+}
+.nav__icone{
+    fill: var(--couleur-primaire);
+    padding-right: var(--espace-xp);
 }

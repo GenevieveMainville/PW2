@@ -9,7 +9,7 @@ export default class ModifierCellier extends ModalCellier{
         this._idCellier = id
         this._elContenu = document.querySelector('[data-js-modalcontenu]')
         this._elUsager =  document.querySelector("[data-js-usager]")
-        this._elNom_cellier = document.querySelector("[name='nom_cellier']")
+        this._elNom_cellier = document.querySelector("[name='nom_cellier_modal']")
         this._elType_cellier_id = document.querySelectorAll("[name='type_cellier_id']")
         this._elDescription_cellier =document.querySelector("[name='description_cellier']")
         this.init()

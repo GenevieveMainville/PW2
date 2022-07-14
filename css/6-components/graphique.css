@@ -1,7 +1,19 @@
-.graphique{
-    width: 50%;
+.graphique__titre{
+    padding-bottom: var(--espace-p);
 }
-
+.graphique--police{
+    font-size: var(--police-xp);
+    font-weight: var(--police-gras);
+}
+.graphique{
+    border: 1px solid;
+    padding: var(--espace-p);
+}
+@media only screen and (min-width: 1200px) {
+    .graphique{
+        width: 70%;
+    }
+}
 .graphique li { 
     position: relative;
     display: block; 
@@ -11,18 +23,18 @@ display: block;
 position: absolute; 
 top: 0; 
 right: 0; 
-margin: 0 0.3em; 
 text-align: right; 
 font-weight: bold; 
+padding-right: 5px;
 }
 .graphique li{ 
 display: flex; 
 position: relative; 
 z-index: 2; 
-margin: var(--espace-xp);
+margin: var(--espace-xp) 0;
 }
 .graphique div{
-    width: 70px;
+    min-width: 70px;
 }
 .graphique .index { 
 display: block;  
@@ -32,11 +44,13 @@ height: 100%;
 background-color: var(--couleur-accent);
 text-indent: -9999px; 
 overflow: hidden; 
+
 }
 
 .graphique-vertical{
 display:table;
 table-layout: fixed;   
+margin-top: 50px;
 
 }   
 .graphique-vertical li{
@@ -46,10 +60,37 @@ table-layout: fixed;
     height:200px;
 }
 .graphique-vertical span{
-    margin: 0 var(--espace-xp);
+    margin: 0 var(--espace-p);
     display: block;
+    text-align: center;
 }
-.graphique--vertical--couleur{
-    background-color: var(--couleur-accent);
+.graphique-vertical--couleur{
+    background-color: #446879 ;
+    opacity: 0.7;
 }
    
+.graphique--police{
+    font-size: var(--police-xp);
+    
+}
+.graphique--pd{
+    padding-left: var(--espace-xp);
+}
+.graphique__contenant--bordure{
+    border: 1px solid;
+}
+
+.graphique__contenant{
+   padding: var(--espace-p);
+    overflow-x: auto;
+    white-space: nowrap;
+    width: 99.9%;
+}
+@media only screen and (min-width: 1200px) {
+    .graphique__contenant{
+        width: 70%;
+    }
+}
+.graphique--gras{
+    font-weight: var(--police-gras);
+}

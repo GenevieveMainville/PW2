@@ -59,6 +59,14 @@ function rechercherBouteillesCellier() {
                         let prix_bouteille = bouteille["prix_bouteille"];
                         let note = bouteille["note"];
 
+                        console.log(note);
+
+                        if (note) {
+                            note = `Ma note est de ${note}/5`;
+                        } else {
+                            note = "Aucune note encore attribuée";
+                        }
+
                         let carteBouteille = `
                                             <a class="carte__lien" href="?requete=details&id_cellier=${id_cellier}">
                                                 <div class="carte__contenu" data-js-bouteille="${id_bouteille}">
@@ -84,7 +92,7 @@ function rechercherBouteillesCellier() {
                                                                         Au prix de ${prix_bouteille}
                                                                     </div>
                                                                     <div class="carte__texte">
-                                                                        Ma note est de ${note}/10
+                                                                        ${note}
                                                                     </div>
                                                                 </div>
                                                             </div>

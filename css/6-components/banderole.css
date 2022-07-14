@@ -3,10 +3,30 @@
     
 }
 .banderole__contenant{
+    display: flex;
     color: var(--couleur-primaire);
     text-align: center;
-    padding: var(--espace-xp);
+    padding: var(--espace-p);
     background-color: var(--couleur-secondaire);
     font-size: var(--police-xp);
+    transition: transform .2s;
+    justify-content: space-evenly;
    
+}
+
+.banderole__texte{
+    font-weight: var(--police-xgras);
+   
+}
+.banderole__titre{
+    padding-bottom: var(--espace-xp);
+    text-transform: uppercase;
+}
+.banderole__icone{
+    padding-right: var(--espace-p);
+    fill: var(--couleur-primaire);
+    align-self: center;
+}
+.banderole__icone--grosseur{
+    width: 30px;
 }

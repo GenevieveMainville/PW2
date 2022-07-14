@@ -1,0 +1,825 @@
+.admin-body {
+    background-color: #524E47;
+    margin: 0;
+    padding: 0;
+}
+
+.admin-body.waiting * {
+    cursor: wait;
+}
+
+.admin-body .nav {
+    justify-content: flex-end;
+}
+
+.admin-body .section1 svg {
+    fill: #f3f4f6;
+    width: 75px;
+}
+
+.non-modifiable {
+    background-color: #996633;
+    color: #f3f4f6;
+
+}
+
+.pa-8 {
+    padding: 8px !important;
+}
+
+.liste-wrapper {
+    padding: 0;
+}
+
+@media (min-width: 768px) {
+    .liste-wrapper {
+        padding: var(--espace-p) 0;
+    }
+}
+
+.liste-wrapper select {
+    padding: var(--espace-xp);
+}
+
+.liste-wrapper select[readonly],
+.liste-wrapper input[type='checkbox'][readonly] {
+    pointer-events: none;
+}
+
+input.plus-gros {
+    transform: scale(1.5);
+    margin: var(--espace-xp);
+}
+
+.section2 {
+    align-items: center;
+    background-color: rgb(126, 0, 63);
+    color: white;
+    display: flex;
+    flex-direction: column-reverse;
+    justify-content: space-between;
+    margin: 0 0 var(--espace-p) 0;
+    padding: var(--espace-p);
+}
+
+.nom-table-wrapper {
+    flex-grow: 1;
+    margin-top: var(--espace-p);
+}
+
+@media (min-width: 768px) {
+    .section2 {
+        flex-direction: row;
+        margin: var(--espace-p) 0;
+    }
+
+    .nom-table-wrapper {
+        margin-top: 0;
+    }
+}
+
+.section1.hide,
+.section2.hide,
+.section3.hide,
+.section4.hide {
+    display: none;
+}
+
+.vino-selection {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
+.vino-selection>*+* {
+    margin-top: var(--espace-p);
+}
+
+@media (min-width: 768px) {
+    .vino-selection {
+        flex-direction: row;
+    }
+
+    .vino-selection>*+* {
+        margin-left: var(--espace-p);
+        margin-top: 0;
+    }
+}
+
+.carte-admin {
+    display: flex;
+    padding: var(--espace-p);
+}
+
+.carte-admin>*+* {
+    margin-left: var(--espace-p);
+}
+
+.carte-admin .box {
+    align-items: center;
+    border-radius: 3px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+}
+
+.carte-admin .box h1,
+.carte-admin .box h3 {
+    display: flex;
+    justify-content: center;
+    margin: 0;
+    padding: 0;
+}
+
+.carte-admin .box h1 {
+    font-size: var(--espace-m);
+}
+
+.carte-admin .box h3 {
+    font-size: var(--espace-p);
+}
+
+.carte-admin .box p {
+    margin: 0 0 1rem;
+    padding: 0;
+}
+
+.carte-admin img {
+    box-sizing: border-box;
+    margin: 0;
+    object-fit: cover;
+    width: auto;
+}
+
+.mt-4 {
+    margin-top: 1.5rem !important;
+}
+
+.text-center {
+    text-align: center !important;
+}
+
+.statis {
+    color: #f3f4f6;
+}
+
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.row>* {
+    flex-shrink: 0;
+    width: 100%;
+    max-width: 100%;
+}
+
+@media (min-width: 768px) {
+    .col-md-6 {
+        flex: 0 0 auto;
+        width: 48%;
+    }
+}
+
+.mb-4 {
+    margin-bottom: 1.5rem !important;
+}
+
+.carte-admin {
+    background-color: #44413B;
+    color: #f3f4f6;
+    cursor: pointer;
+    height: 140px;
+}
+
+.carte-vino.selected,
+.err-vino {
+    background-color: rgb(126, 0, 63);
+    color: #f3f4f6;
+}
+
+.carte-bouteille.selected,
+.err-bouteille {
+    background-color: #04AA6D;
+    color: #f3f4f6;
+}
+
+.carte-cellier.selected,
+.err-cellier {
+    background-color: #276880;
+    color: #f3f4f6;
+}
+
+.carte-usager.selected,
+.err-usager {
+    background-color: #6A3E4F;
+    color: #f3f4f6;
+}
+
+/**************************************************************************/
+/* General focus reset */
+.admin-body textarea:focus,
+.admin-body input[type="text"]:focus,
+.admin-body input[type="password"]:focus,
+.admin-body input[type="datetime"]:focus,
+.admin-body input[type="datetime-local"]:focus,
+.admin-body input[type="date"]:focus,
+.admin-body input[type="month"]:focus,
+.admin-body input[type="time"]:focus,
+.admin-body input[type="week"]:focus,
+.admin-body input[type="number"]:focus,
+.admin-body input[type="email"]:focus,
+.admin-body input[type="url"]:focus,
+.admin-body input[type="search"]:focus,
+.admin-body input[type="tel"]:focus,
+.admin-body input[type="color"]:focus {
+    border-color: transparent;
+    box-shadow: 0 1px 1px transparent inset, 0 0 8px transparent;
+    outline: 0 none;
+    border-radius: 0;
+}
+
+::placeholder {
+    /* Firefox, Chrome, Opera */
+    color: #ddd !important;
+}
+
+:-ms-input-placeholder {
+    /* Internet Explorer 10-11 */
+    color: #ddd !important;
+}
+
+::-ms-input-placeholder {
+    /* Microsoft Edge */
+    color: #ddd !important;
+}
+
+h1 {
+    font-size: 56px;
+    font-weight: 700;
+}
+
+.err {
+    font-size: 18px;
+    padding: 15px;
+    display: flex;
+    justify-content: center;
+}
+
+.filtre-wrapper {
+    align-items: center;
+    background-color: #04AA6D;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    margin: var(--espace-xp) 0;
+    padding: var(--espace-p);
+}
+
+@media (min-width: 768px) {
+    .filtre-wrapper {
+        flex-direction: row;
+        padding: 0;
+    }
+}
+
+.filtre-wrapper.filtre-bouteille {
+    background-color: #04AA6D;
+    color: #f3f4f6;
+    margin: var(--espace-xp) 0;
+}
+
+.filtre-wrapper.filtre-cellier {
+    background-color: #276880;
+    color: #f3f4f6;
+}
+
+.filtre-wrapper.filtre-usager {
+    background-color: #6A3E4F;
+    color: #f3f4f6;
+}
+
+.filtre-wrapper.filtre-vino {
+    background-color: rgb(126, 0, 63);
+    ;
+    color: #f3f4f6;
+}
+
+.filtre-wrapper>*:first-child {
+    margin: 0;
+}
+
+@media (min-width: 768px) {
+    .filtre-wrapper>*:first-child {
+        margin: 0 var(--espace-xp);
+    }
+}
+
+.filtre-table {
+    flex-grow: 1;
+    line-height: 1.5;
+    padding: var(--espace-xp);
+    margin-top: var(--espace-p);
+    width: 100%;
+}
+
+@media (min-width: 768px) {
+    .filtre-table {
+        margin-top: 0;
+        width: auto;
+    }
+}
+
+.section3 {
+    display: flex;
+}
+
+.section3>div {
+    width: 100%;
+}
+
+.section3 table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.table-container {
+    max-height: 393px;
+}
+
+.table-container table {
+    width: 100%;
+}
+
+.table-container thead,
+.table-container tbody,
+.table-container th,
+.table-container tr {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+}
+
+.table-container tbody {
+    display: block;
+    overflow: auto;
+    table-layout: fixed;
+    max-height: 250px;
+}
+
+.detail-container td label {
+    display: block;
+}
+
+.detail-container td input[type="text"] {
+    background-color: transparent;
+    border: 2px solid transparent;
+    font-size: 16px;
+    height: 35px;
+    margin: 0;
+    padding: 0 8px;
+    width: 100%;
+}
+
+.detail-container td input[type="text"]:focus {
+    border: 2px solid #000;
+}
+
+.lien-externe {
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+}
+
+.lien-externe a:link,
+.lien-externe a:visited,
+.lien-externe a:hover,
+.lien-externe a:active {
+    color: rgb(0, 0, 238);
+}
+
+.lien-externe svg {
+    fill: #44413B;
+    width: 20px;
+}
+
+.section3 table tr:hover .lien-externe svg {
+    fill: #ffffff;
+}
+
+.section3 table td,
+.section3 table th {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+.section3 table tr {
+    background-color: #ffffff;
+}
+
+.section3 table tr.selected td {
+    background-color: #44413B;
+    color: #fff;
+}
+
+.section3 table tr.selected .lien-externe svg {
+    fill: #ffffff;
+}
+
+.section3 table tr:nth-child(even) {
+    background-color: #cfcfcf;
+}
+
+.section3 table td.couleur-filtre {
+    background-color: #ffab40;
+}
+
+.section3 table tr:hover,
+.section3 table tr:hover td.couleur-filtre {
+    background-color: #333;
+    color: #ffffff;
+}
+
+.section3 table th {
+    background-color: #04AA6D;
+    color: white;
+    cursor: pointer;
+    padding: 0;
+    text-align: left;
+}
+
+.section3 table.table-bouteille th {
+    background-color: #04AA6D;
+    color: #f3f4f6;
+}
+
+.section3 table.table-cellier th {
+    background-color: #276880;
+    color: #f3f4f6;
+}
+
+.section3 table.table-usager th {
+    background-color: #6A3E4F;
+    color: #f3f4f6;
+}
+
+.section3 table.table-vino th {
+    background-color: rgb(126, 0, 63);
+    color: #f3f4f6;
+}
+
+.section3 table th span {
+    display: block;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+}
+
+.section3 table th,
+.section3 table td {
+    display: none;
+}
+
+.section3 .table-bouteille th:nth-child(3),
+.section3 .table-bouteille td:nth-child(3),
+.section3 .table-cellier th:nth-child(3),
+.section3 .table-cellier td:nth-child(3),
+.section3 .table-usager th:nth-child(2),
+.section3 .table-usager td:nth-child(2),
+.section3 .table-vino th:nth-child(2),
+.section3 .table-vino td:nth-child(2) {
+    display: block;
+}
+
+@media (min-width: 768px) {
+
+    .section3 .table-bouteille th:nth-child(3),
+    .section3 .table-bouteille td:nth-child(3),
+    .section3 .table-bouteille th:nth-child(4),
+    .section3 .table-bouteille td:nth-child(4),
+    .section3 .table-cellier th:nth-child(3),
+    .section3 .table-cellier td:nth-child(3),
+    .section3 .table-cellier th:nth-child(4),
+    .section3 .table-cellier td:nth-child(4),
+    .section3 .table-usager th:nth-child(2),
+    .section3 .table-usager td:nth-child(2),
+    .section3 .table-usager th:nth-child(4),
+    .section3 .table-usager td:nth-child(4),
+    .section3 .table-vino th:nth-child(1),
+    .section3 .table-vino td:nth-child(1),
+    .section3 .table-vino th:nth-child(2),
+    .section3 .table-vino td:nth-child(2) {
+        display: table-cell;
+    }
+}
+
+.section4 {
+    display: flex;
+    flex-direction: column;
+}
+
+.section4>div {
+    width: 100%;
+}
+
+.section4 table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.section4 table td,
+.section4 table th {
+    border: 1px solid #ddd;
+    padding: 0;
+}
+
+.section4 table tr {
+    background-color: #ffffff;
+}
+
+.section4 table tr:nth-child(even) {
+    background-color: #cfcfcf;
+}
+
+.section4 table tr:hover {
+    background-color: #019879;
+    color: #ffffff;
+}
+
+.section4 table th {
+    background-color: #04AA6D;
+    color: white;
+    padding: 0;
+    text-align: left;
+}
+
+.section4 table th span {
+    display: block;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+}
+
+.groupe-ajouter {
+    display: flex;
+    margin: 0 0 var(--espace-xp) 0;
+    justify-content: flex-end;
+}
+
+@media (min-width: 768px) {
+    .groupe-ajouter {
+        margin: var(--espace-p) 0 var(--espace-xp) 0;
+    }
+}
+
+.groupe-action {
+    display: flex;
+    flex-direction: column;
+    margin: var(--espace-l) 0 var(--espace-xp) 0;
+    position: relative;
+}
+
+@media (min-width: 768px) {
+    .groupe-action {
+        flex-direction: row;
+    }
+}
+
+.action-texte {
+    align-items: center;
+    color: #f3f4f6;
+    display: flex;
+    flex-grow: 1;
+    font-size: var(--espace-p);
+    font-weight: bold;
+    order: 1;
+    position: absolute;
+    top: 7px;
+}
+
+.action-boutons {
+    display: flex;
+    justify-content: flex-end;
+    order: 2;
+}
+
+.groupe-ajouter-saq {
+    display: flex;
+    margin: var(--espace-xp) 0 0 0;
+    justify-content: flex-end;
+    order: 3;
+    width: 100%;
+}
+
+@media (min-width: 768px) {
+    .action-texte {
+        position: static;
+        top: auto;
+    }
+
+    .groupe-ajouter-saq {
+        margin: 0 var(--espace-p) 0 0;
+        order: 2;
+        width: 300px;
+    }
+
+    .action-boutons {
+        order: 3;
+    }
+}
+
+.groupe-ajouter-saq.hide {
+    display: none;
+}
+
+.info-saq {
+    display: flex;
+    margin: var(--espace-xp) 0;
+}
+
+.url_saq {
+    flex-grow: 1;
+    margin-right: var(--espace-xp);
+    padding: var(--espace-xp);
+}
+
+.btn-ajouter,
+.btn-annuler,
+.btn-confirmer,
+.btn-modifier {
+    border: 1px solid #f3f4f6;
+    cursor: pointer;
+    height: auto;
+    padding: var(--espace-xp);
+    width: auto;
+}
+
+.btn-annuler {
+    margin-left: var(--espace-xp);
+}
+
+.btn-ajouter.hide {
+    opacity: 0;
+}
+
+.btn-annuler.hide,
+.btn-confirmer.hide,
+.btn-modifier.hide {
+    display: none;
+}
+
+.btn-ajouter:hover,
+.btn-modifier:hover {
+    background-color: #f3f4f6;
+    border: 1px solid transparent;
+}
+
+.btn-ajouter svg,
+.btn-annuler svg,
+.btn-confirmer svg,
+.btn-modifier svg {
+    fill: #f3f4f6;
+    height: 20px;
+    width: 20px;
+}
+
+.btn-ajouter:hover svg,
+.btn-modifier:hover svg {
+    fill: #44413B;
+}
+
+.btn-confirmer:hover {
+    background-color: green;
+    border: 1px solid transparent;
+}
+
+.btn-annuler:hover {
+    background-color: red;
+    border: 1px solid transparent;
+}
+
+.btn-annuler:hover svg,
+.btn-confirmer:hover svg {
+    fill: #f3f4f6;
+}
+
+
+.selection-nom-table {
+    font-size: larger;
+}
+
+#selection-table-vino {
+    padding: var(--espace-xp);
+}
+
+.btn-afficher-vino {
+    width: 100%;
+}
+
+.section1.edition,
+.section2.edition,
+.section3.edition {
+    pointer-events: none;
+}
+
+/* Forcer la table à ne plus être une table */
+.section4 table,
+.section4 thead,
+.section4 tbody,
+.section4 th,
+.section4 td,
+.section4 tr {
+    display: block;
+}
+
+/* Masquer les en-têtes de tableau */
+.section4 thead tr {
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+}
+
+.section4 tr {
+    border: 1px solid #ccc;
+}
+
+.section4 td {
+    /* Doit se comporter comme une "rangée" */
+    border: none;
+    border-bottom: 1px solid #eee;
+    position: relative;
+    padding-left: 50%;
+}
+
+.section4 td:before {
+    /* Maintenant comme un en-tête de tableau */
+    position: absolute;
+    top: 6px;
+    left: 6px;
+    width: 45%;
+    padding-right: 10px;
+    white-space: nowrap;
+}
+
+.section4 td>* {
+    width: 100%;
+}
+
+@media (min-width: 768px) {
+    .section4 table {
+        display: table;
+        border-collapse: collapse;
+        border-spacing: 2px;
+        border-color: gray;
+    }
+
+    .section4 thead {
+        display: table-header-group;
+        vertical-align: middle;
+        border-color: inherit;
+    }
+
+    .section4 tbody {
+        display: table-row-group;
+        vertical-align: middle;
+        border-color: inherit;
+    }
+
+    .section4 td {
+        display: table-cell;
+        vertical-align: inherit;
+        border: none;
+        position: static;
+        padding: 0;
+    }
+
+    .section4 th {
+        display: table-cell;
+        vertical-align: inherit;
+        font-weight: bold;
+        text-align: center;
+    }
+
+    .section4 tr {
+        border: none;
+        border-bottom: 1px solid gray;
+        display: table-row;
+        vertical-align: inherit;
+        border-color: inherit;
+    }
+
+    .section4 thead tr {
+        position: static;
+        top: auto;
+        left: auto;
+    }
+
+    .section4 td>* {
+        width: auto;
+    }
+}

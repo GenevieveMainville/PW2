@@ -134,3 +134,11 @@
     margin: 0;
     padding: 1rem 0;
 }
+
+.main-connexion input:placeholder-shown {
+    border: 1px solid var(--couleur-accent) !important;
+}
+
+.main-connexion .libelle {
+    padding: var(--espace-xp);
+}

@@ -230,14 +230,14 @@ class ExtraData extends Modele
             for ($i = 0; $i < $nbParticularites; $i++) {
                 $laChaine = $myArray[$i];
 
-                if (str_contains($laChaine, "Biodynamique")) $biodynamique = 1;
-                if (str_contains($laChaine, "Casher")) $casher = 1;
-                if (str_contains($laChaine, "Désalcoolisé")) $desalcoolise = 1;
-                if (str_contains($laChaine, "Équitable")) $equitable = 1;
-                if (str_contains($laChaine, "Faible taux")) $faible_taux_alcool = 1;
-                if (str_contains($laChaine, "Produit bio")) $produit_bio = 1;
-                if (str_contains($laChaine, "Vin nature")) $vin_nature = 1;
-                if (str_contains($laChaine, "Vin orange")) $vin_orange = 1;
+                if (strpos($laChaine, "Biodynamique")) $biodynamique = 1;
+                if (strpos($laChaine, "Casher")) $casher = 1;
+                if (strpos($laChaine, "Désalcoolisé")) $desalcoolise = 1;
+                if (strpos($laChaine, "Équitable")) $equitable = 1;
+                if (strpos($laChaine, "Faible taux")) $faible_taux_alcool = 1;
+                if (strpos($laChaine, "Produit bio")) $produit_bio = 1;
+                if (strpos($laChaine, "Vin nature")) $vin_nature = 1;
+                if (strpos($laChaine, "Vin orange")) $vin_orange = 1;
             }
 
             $stmt->bind_param(

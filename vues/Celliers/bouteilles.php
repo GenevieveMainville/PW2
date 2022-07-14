@@ -1,4 +1,4 @@
-<section class="section-wrapper carte carte--bg-couleur">
+<section class="section-wrapper carte carte--bg-couleur" data-js-usager="<?php echo $id_usager?>">
 
     <!--ENTETE Titre et bouton (+)-->
     <div class="carte__entete-bouton">

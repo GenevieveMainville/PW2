@@ -227,6 +227,31 @@ function traiterGardeJusqua() {
 
 
 /**
+ * Traiter les listes
+ */
+function traiterListes() {
+    let nbSelections = 0;
+    const elNbSelections = document.querySelector('.nb-listes');
+    const elInnerSelection = elNbSelections.querySelector('.nb-selections');
+
+    for (let i = 0, l = elListe.length; i < l; i++) {
+        if (elListe[i].checked) nbSelections++;
+    }
+
+    if (nbSelections === 0) {
+        if (!elInnerSelection.classList.contains("hide")) {
+            elInnerSelection.classList.add("hide");
+        }
+    } else {
+        elInnerSelection.innerHTML = nbSelections;
+        elInnerSelection.classList.remove("hide");
+    }
+
+    elListeToutes.checked = (nbSelections === elListe.length);
+}
+
+
+/**
  * Traiter les notes
  */
 function traiterNote() {
@@ -515,6 +540,7 @@ if (elCellier.length > 0) {
     });
 }
 
+
 /**
  * Traiter la liste de checkboxes des cepages
  */
@@ -637,6 +663,27 @@ if (elGardeJusqua.length > 0) {
         });
 
         traiterGardeJusqua();
+    });
+}
+
+
+/**
+ * Traiter la liste de checkboxes des listes
+ */
+let elListe = document.querySelectorAll('[data-js-liste]');
+let elListeToutes = document.querySelector('[data-js-listes-toutes]');
+
+if (elListe.length > 0) {
+    elListe.forEach(uneListe => {
+        uneListe.addEventListener('change', traiterListes);
+    });
+
+    elListeToutes.addEventListener('change', () => {
+        elListe.forEach(uneListe => {
+            uneListe.checked = elListeToutes.checked;
+        });
+
+        traiterListes();
     });
 }
 
@@ -1054,6 +1101,7 @@ elBtnReInit.addEventListener("click", rechercher);
 const elBtnTrier = document.querySelector('[data-js-trier]');
 elBtnTrier.addEventListener("click", rechercher);
 
+
 function rechercher() {
     // On identifie l'ordre de tri des bouteilles lors de l'affichage.
     const selectTri = document.querySelector('.tri-select-options').value;
@@ -1066,6 +1114,22 @@ function rechercher() {
     // On passe à travers chacun des filtres pour récupérer les valeurs à traiter.
     let aDonnees = {},
         listeSelection = "";
+
+    // Les listes
+    let elListe = document.querySelectorAll('[data-js-liste]'),
+        aListes = [];
+
+    elListe.forEach(uneListe => {
+        if (uneListe.checked) {
+            aListes.push(uneListe.dataset.jsListe);
+        }
+    });
+
+    listeSelection = aListes.toString();
+
+    if (listeSelection) {
+        aDonnees['les_listes'] = listeSelection;
+    }
 
     // Cellier
     let elCellier = document.querySelectorAll('[data-js-cellier]'),
@@ -1442,6 +1506,12 @@ function rechercher() {
                         let prix_bouteille = bouteille["prix_bouteille"];
                         let note = bouteille["note"];
 
+                        if (note) {
+                            note = `Ma note est de ${note}/5`;
+                        } else {
+                            note = "Aucune note encore attribuée";
+                        }
+
                         let carteBouteille = `
                                             <a class="carte__lien" href="?requete=details&id_cellier=${id_cellier}">
                                                 <div class="carte__contenu" data-js-bouteille="${id_bouteille}">
@@ -1467,7 +1537,7 @@ function rechercher() {
                                                                         Au prix de ${prix_bouteille}
                                                                     </div>
                                                                     <div class="carte__texte">
-                                                                        Ma note est de ${note}/10
+                                                                        ${note}
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -1575,4 +1645,50 @@ if (valIdAppellant > 0) {
             }
         });
     }
+}
+
+
+/**
+ * La page peut être appellée avec des listes à afficher, on les sélectionne si c'est le cas.
+ * On montre aussi dans les filtres que les listes ont été sélectionnées.
+ */
+const elFavoriListe = document.querySelector('[data-js-liste="favori"]');
+const elFavori = document.querySelector('[data-js-favori]');
+const valFavori = elFavori.dataset.jsFavori;
+
+const elEssayerListe = document.querySelector('[data-js-liste="essayer"]');
+const elEssayer = document.querySelector('[data-js-essayer]');
+const valEssayer = elEssayer.dataset.jsEssayer;
+
+const elAchatListe = document.querySelector('[data-js-liste="achat"]');
+const elAchat = document.querySelector('[data-js-achat]');
+const valAchat = elAchat.dataset.jsAchat;
+
+const elAccListes = document.querySelector('[data-js-accordeon-listes]');
+
+if (valFavori > 0 || valEssayer > 0 || valAchat > 0) {
+    const elPagePrecedente = document.querySelector('[data-js-page-precedente]');
+    const elParent = elPagePrecedente.closest('.page-precedente-container');
+
+    elParent.classList.remove("ferme");
+
+    elPagePrecedente.addEventListener('click', () => {
+        window.location.replace(document.referrer);
+    });
+
+    if (valFavori > 0) {
+        elFavoriListe.checked = true;
+    }
+
+    if (valEssayer > 0) {
+        elEssayerListe.checked = true;
+    }
+
+    if (valAchat > 0) {
+        elAchatListe.checked = true;
+    }
+
+    traiterListes();
+    elOuvrirFiltres.click();
+    elAccListes.click();
 }

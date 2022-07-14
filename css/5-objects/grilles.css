@@ -1,10 +1,10 @@
 .grille {
     display: grid;
 }
-
+.grille--2l,
 .grille--2,
 .grille--6 {
-    grid-gap: 30px;
+    grid-gap: var(--espace-l);
     grid-template-columns: repeat(1, 1fr);
 }
 .grille--3{
@@ -33,6 +33,7 @@
 
 
 @media only screen and (min-width: 1024px) {
+   
     .grille--4 {
         grid-gap: 1.75vw;
         grid-template-columns: repeat(4, 1fr);

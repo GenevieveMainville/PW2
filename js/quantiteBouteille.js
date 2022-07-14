@@ -11,11 +11,13 @@
           
       // Au click du bouton diminué (-)
        element.addEventListener("click", function (e) {
+      
            e.preventDefault();
+           let idUsager = document.querySelector('[data-js-usager]').dataset.jsUsager
            // id_bouteille
            let id =element.parentElement.dataset.jsId;
-           console.log(element.parentElement)
-           let requete = new Request(BaseURL + "?requete=reduireQteBouteille", { method: 'POST', body: '{"id": ' + id + '}' });
+      
+           let requete = new Request(BaseURL + "?requete=reduireQteBouteille", { method: 'POST', body: '{"id_usager": ' + idUsager + ',"id": ' + id + '}' });
   
            // Requête fetch
            fetch(requete)
@@ -61,10 +63,11 @@
        // Au click du bouton ajouter (+)
        element.addEventListener("click", function (e) {
            e.preventDefault();
+           let idUsager = document.querySelector('[data-js-usager]').dataset.jsUsager
            // id_bouteille
            let id =element.parentElement.dataset.jsId;
   
-           let requete = new Request(BaseURL + "?requete=ajouterQteBouteille", { method: 'POST', body: '{"id": ' + id + '}' });
+           let requete = new Request(BaseURL + "?requete=ajouterQteBouteille", { method: 'POST', body: '{"id_usager": ' + idUsager + ',"id": ' + id + '}' });
   
            // Requête fetch
            fetch(requete)

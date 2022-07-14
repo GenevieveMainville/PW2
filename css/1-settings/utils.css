@@ -3,11 +3,18 @@
     margin: 10px 0;
 }
 
-.row{
+.row-f{
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: column;
 }
-
+@media only screen and (min-width: 760px){
+    .row-f{
+       flex-direction: row;
+    }
+}
+.row-f-r{
+     display: flex;
+}
 .col{
     flex-basis: 0;
     flex-grow: 1;
@@ -16,7 +23,7 @@
 
 .col-6{
     flex: 0 0 50%;
-    max-width: 50%;
+    
 }
 
 .col-4{

@@ -467,9 +467,34 @@ class Recherche extends Modele
         $where = "";
 
         if (isset($filtres)) {
+            if (!$this->estVide($filtres, "les_listes")) {
+                $aListes = explode(",", $filtres["les_listes"]);
+                $whereListe = "";
+
+                foreach ($aListes as $liste) {
+                    switch ($liste) {
+                        case "favori":
+                            $whereListe .= "favori_bouteille = 1 OR ";
+                            break;
+
+                        case "essayer":
+                            $whereListe .= "essayer_bouteille = 1 OR ";
+                            break;
+
+                        case "achat":
+                            $whereListe .= "achat_bouteille = 1 OR ";
+                            break;
+                    }
+
+                    if ($whereListe) {
+                        $where = "(" . substr($whereListe, 0, -4) . ") AND ";
+                    }
+                }
+            }
+
             // Cellier
             if (!$this->estVide($filtres, "id_cellier")) {
-                $where .= "(id_cellier IN (" . $filtres["id_cellier"] . ")) AND ";
+                $where .= "(id_cellier IN (" . $filtres["id_cellier"] . ")) OR ";
             }
 
             // Types de cellier

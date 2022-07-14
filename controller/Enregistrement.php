@@ -1,5 +1,16 @@
-
 <?php
+ob_start();
+
+if (!class_exists('Usager')) {
+    require_once('../modeles/Usager.class.php');
+}
+
+if (!class_exists('Vino')) {
+    require_once('../modeles/Vino.class.php');
+}
+
+$oUsager = new Usager();
+$oVino = new Vino();
 
 // Ouvrir une nouvelle connexion au serveur MySQL
 $connection = mysqli_connect(HOST, USER, PASSWORD, DATABASE) or die("Connexion à la base de données non établie.");
@@ -11,13 +22,7 @@ global $erreurs;
 $nom = $adresse = $ville = $utilisateur = $motDePasse = $confirmerMdp = $pays_id = $telephone = $jour = $mois = $annee = $courriel = $conditions =  "";
 
 if (!isset($lesPays)) {
-    $sql = "SELECT id, nom FROM generique__pays ORDER BY id";
-    $result = mysqli_query($connection, $sql) or die(mysqli_error($connection));
-    $lesPays = [];
-
-    while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
-        $lesPays[] = $row;
-    }
+    $lesPays = $oVino->lirePays();
 }
 
 if (!isset($lesMois)) {
@@ -25,7 +30,7 @@ if (!isset($lesMois)) {
 }
 
 if (isset($_POST["soumettre"])) {
-  
+
     if (isset($_POST["usager_nom"])) {
         $nom = $_POST["usager_nom"];
     }
@@ -43,7 +48,6 @@ if (isset($_POST["soumettre"])) {
     }
     if (isset($_POST["usager_naissance"])) {
         $naissance = $_POST["usager_naissance"];
-        
     }
     if (isset($_POST["usager_courriel"])) {
         $courriel = $_POST["usager_courriel"];
@@ -90,8 +94,7 @@ if (isset($_POST["soumettre"])) {
         $estValide = true;
 
         // Vérifier si l'utilisateur existe déjà
-        $sqlValiderUtilisateur = mysqli_query($connection, "SELECT * FROM usager__login WHERE nom_utilisateur = '{$utilisateur}' ");
-        $utilisateurTrouve = mysqli_num_rows($sqlValiderUtilisateur);
+        $utilisateurTrouve = $oUsager->verifierNom($utilisateur);
 
         if ($utilisateurTrouve > 0) {
             $erreurs['usager_nom_utilisateur'] = "Ce nom d'utilisateur existe déjà.";
@@ -99,8 +102,7 @@ if (isset($_POST["soumettre"])) {
         }
 
         // Vérifier si le courriel existe déjà
-        $sqlValiderCourriel = mysqli_query($connection, "SELECT * FROM usager__detail WHERE courriel = '{$courriel}' ");
-        $courrielTrouve = mysqli_num_rows($sqlValiderCourriel);
+        $courrielTrouve = $oUsager->verifierCourriel($courriel);
 
         if ($courrielTrouve > 0) {
             $erreurs['usager_courriel']  = "Ce courriel existe déjà.";
@@ -127,29 +129,32 @@ if (isset($_POST["soumettre"])) {
             // Hachage du mot de passe
             $hachageMdp = password_hash($motDePasse, PASSWORD_BCRYPT);
 
+            $date = new DateTime();
+            $date->setTimezone(new DateTimeZone('America/New_York'));
+            $fdate = $date->format('Y-m-d H:i:s');
+
             // Préparer et exécuter la requête
-            $requete = "INSERT INTO usager__login (nom_utilisateur, mot_de_passe, jeton, date_creation, date_modification) 
-                        VALUES ('{$utilisateur}', '{$hachageMdp}', '{$jeton}', NOW(), NOW())";
+            $donnees = new StdClass();
+            $donnees->nom = $nom;
+            $donnees->adresse = $adresse;
+            $donnees->telephone = $telephone;
+            $donnees->courriel = $courriel;
+            $donnees->date_naissance = $date_naissance;
+            $donnees->ville = $ville;
+            $donnees->pays_id = $pays_id;
+            $donnees->nom_utilisateur = $utilisateur;
+            $donnees->mot_de_passe = $hachageMdp;
+            $donnees->type_utilisateur = 1;
+            $donnees->jeton = $jeton;
+            $donnees->date_creation = $fdate;
+            $donnees->date_modification = $fdate;
 
-            $sqlQuery = mysqli_query($connection, $requete);
+            $resultat = $oUsager->ajouterUsager($donnees);
 
-            if (!$sqlQuery) {
-                die("La requête à la base de données a échoué: " . mysqli_error($connection));
+            if (!$resultat) {
+                die("La requête à la base de données a échoué");
             } else {
-                // On récupère l'id qui vient d'être ajouté car dans la table usager__detail, on utilise le même
-                $nouvelId = mysqli_insert_id($connection);
-
-                // Préparer et exécuter la requête
-                $requete = "INSERT INTO usager__detail (id, nom, adresse, telephone, courriel, date_naissance, ville, date_creation, date_modification)
-                            VALUES ('{$nouvelId}', '{$nom}', '{$adresse}', '{$telephone}', '{$courriel}', '{$date_naissance}', '{$ville}', NOW(), NOW())";
-
-                $sqlQuery = mysqli_query($connection, $requete);
-
-                if (!$sqlQuery) {
-                    die("La requête à la base de données a échoué: " . mysqli_error($connection));
-                } else {
-                    header("Location: ./index.php?requete=connecter");
-                }
+                header("Location: ./index.php?requete=connecter");
             }
         }
     } else {

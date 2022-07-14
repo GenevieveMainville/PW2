@@ -33,6 +33,7 @@ export default class SupprimerCellier extends ModalCellier{
                 this._elErreurchoix.textContent = 'Choisir un cellier.';
                 valide = false;
             }
+         
      
            // Si valide
             if(valide){
@@ -54,8 +55,14 @@ export default class SupprimerCellier extends ModalCellier{
          ************************/
         this._btnSupprimer.addEventListener('click', (e)=>{
             e.preventDefault();
+
+            
+            let cellierAdeplacer = {
+                "id_cellierChoisi" : this._selectCellier.value,
+                "id_cellierSupprime": this._idCellier
+            }
             //Requête
-            let requete = new Request(BaseURL + "?requete=supprimerCellier", { method: 'POST', body: '{"id": ' + this._idCellier + '}'});
+            let requete = new Request(BaseURL + "?requete=supprimerCellier", { method: 'POST', body: JSON.stringify(cellierAdeplacer)});
             fetchCellier(requete,this.ferme())
 
         })

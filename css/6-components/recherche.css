@@ -558,7 +558,7 @@
 .menuRecherche.ouvert {
     opacity: 1;
     width: 100%;
-    margin-right: var(--espace-p);
+    
 }
 
 @media only screen and (min-width: 760px) {
@@ -568,6 +568,7 @@
 
     .menuRecherche.ouvert {
         width: 340px;
+        margin-right: var(--espace-p);
     }
 }
 
