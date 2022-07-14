@@ -231,6 +231,12 @@ class Bouteille extends Modele
         return $rows;
     }
 
+      /*
+       *
+       * Récupération des info sur la bouteille par id
+       * utilisé dans la fiche bouteille
+       *
+       */
     public function getOneBouteille($id_bouteille, $id_cellier)
     {
         $rows = array();
@@ -330,6 +336,11 @@ class Bouteille extends Modele
         return $rows;
     }
 
+   /*
+   *
+   * Récupération des info sur la bouteille par id_vino depuis vino_bouteille
+   * Utilisé dans le scan
+   */
     public function getOneBouteilleFromVino($vino_bouteille_id)
     {
         $rows = array();
@@ -446,6 +457,11 @@ class Bouteille extends Modele
         return $rows;
     }
 
+    /*
+   *
+   * Récupération des info sur la bouteille par nom
+   * Utilisé dans la fiche bouteille dans l'auto-complete
+   */
     public function getOneBouteilleByName($nom)
     {
         $rows = array();
@@ -750,7 +766,12 @@ class Bouteille extends Modele
         return $rows;
     }
 
-    //copier une ligne depuis vino__bouteille dans usager_bouteille
+      /*
+       *
+       * Copier un ligne depuis vino_bouteille sur la table usager bouteille
+       * Utilisé dans le cas ou on veux ajouter une bouteille danns vinno bouteille directement dans favoris, a essayer, ..
+       *  Et ca n'existee pas deja dans usager_bouteille
+       */
     public function copierVinoDansUsagerBouteillle($vino_id)
     {
         $this->_db->set_charset('utf8');

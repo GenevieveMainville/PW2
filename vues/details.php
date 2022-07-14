@@ -223,19 +223,24 @@ function home_base_url(){
                                     $note = $form_values['note'];
                                     for($i = 1; $i <= 5; $i++) {
                                         if($i <= $note) { ?>
-                                            <span class="star_rated note-input "
-                                                  onclick="ratestar(<?php echo $i; ?>, <?php echo $form_values['id_bouteille']?>, <?php echo $form_values['id_cellier']?>)">
+                                            <div class="star_rated note-input noteEtoiles"
+                                                   data-etoile-value="<?php echo $i; ?>"
+                                                   data-idBouteille="<?php echo $form_values['id_bouteille']?>"
+                                                   data-idCellier="<?php echo $form_values['id_cellier']?>"
+                                             >
                                                 &#x2605;
-                                            </span>
+                                            </div>
                                         <?php } else {  ?>
-                                            <span
-                                                  onclick="ratestar(<?php echo $i; ?>, <?php echo $form_values['id_bouteille']?>, <?php echo $form_values['id_cellier']?>)"
-                                                  class="note-input">
+                                            <div
+                                                 data-etoile-value="<?php echo $i; ?>"
+                                                 data-idBouteille="<?php echo $form_values['id_bouteille']?>"
+                                                 data-idCellier="<?php echo $form_values['id_cellier']?>"
+                                                 class="note-input noteEtoiles">
                                                 &#x2605;
-                                            </span>
+                                            </div>
                                         <?php  }
                                     }
-                                    echo '('.$note.'/5)'; ?>
+                                    echo '('.($note ?: 0) .'/5)'; ?>
                                 </div>
                             <?php if($form_values['id_cellier']) { ?>
                                 <div class="row-f">
@@ -826,10 +831,11 @@ function home_base_url(){
                                    <div class=" info-unit icon-btn
                                     <?php echo isset($form_values['favori_bouteille']) && $form_values['favori_bouteille']
                                        ? "active-icon-btn": ""; ?>"
-                                        onclick="modifierFavoris(<?php echo isset($form_values['favori_bouteille']) && $form_values['favori_bouteille'] ? 0: 1; ?>,
-                                        <?php echo isset($id_bouteille) ? $id_bouteille: 0; ?>,
-                                        <?php echo isset($form_values['id_cellier']) ? $form_values['id_cellier']: 0; ?>,
-                                        <?php echo isset($vino_id) ? $vino_id: 0; ?>)"
+                                       id="favoriBtn"
+                                         data-favoriBouteille="<?php echo isset($form_values['favori_bouteille']) && $form_values['favori_bouteille'] ? 0: 1; ?>"
+                                         data-idBouteille="<?php echo isset($id_bouteille) ? $id_bouteille: 0; ?>"
+                                         data-idCellier=" <?php echo isset($form_values['id_cellier']) ? $form_values['id_cellier']: 0; ?>"
+                                         data-vinoId=" <?php echo isset($vino_id) ? $vino_id: 0; ?>"
                                    >
                                        <i class="fa fa-heart" aria-hidden="true"></i>&nbsp;
                                        <?php echo isset($form_values['favori_bouteille']) && $form_values['favori_bouteille']
@@ -838,10 +844,11 @@ function home_base_url(){
                                    <div class="info-unit icon-btn
                                     <?php echo isset($form_values['essayer_bouteille']) && $form_values['essayer_bouteille']
                                        ? "active-icon-btn": ""; ?>"
-                                        onclick="modifierAEssayer( <?php echo isset($form_values['essayer_bouteille']) && $form_values['essayer_bouteille'] ? 0: 1; ?>,
-                                        <?php echo isset($id_bouteille) ? $id_bouteille: 0; ?>,
-                                        <?php echo isset($form_values['id_cellier']) ? $form_values['id_cellier']: 0; ?>,
-                                        <?php echo isset($vino_id) ? $vino_id: 0; ?>)"
+                                       id="essayerBtn"
+                                         data-essayerBouteille="<?php echo isset($form_values['essayer_bouteille']) && $form_values['essayer_bouteille'] ? 0: 1; ?>"
+                                         data-idBouteille="<?php echo isset($id_bouteille) ? $id_bouteille: 0; ?>"
+                                         data-idCellier=" <?php echo isset($form_values['id_cellier']) ? $form_values['id_cellier']: 0; ?>"
+                                         data-vinoId=" <?php echo isset($vino_id) ? $vino_id: 0; ?>"
                                    >
                                        <i class="fa fa-beer" aria-hidden="true"></i>&nbsp;
                                        <?php echo isset($form_values['essayer_bouteille']) && $form_values['essayer_bouteille']
@@ -850,10 +857,11 @@ function home_base_url(){
                                    <div class=" info-unit icon-btn
                                     <?php echo isset($form_values['achat_bouteille']) && $form_values['achat_bouteille']
                                        ? "active-icon-btn": ""; ?>"
-                                        onclick="modifierAAcheter(<?php echo isset($form_values['achat_bouteille']) && $form_values['achat_bouteille'] ? 0: 1; ?>,
-                                        <?php echo isset($id_bouteille) ? $id_bouteille: 0; ?>,
-                                        <?php echo isset($form_values['id_cellier']) ? $form_values['id_cellier']: 0; ?>,
-                                        <?php echo isset($vino_id) ? $vino_id: 0; ?>)"
+                                          id="acheterBtn"
+                                         data-achatBouteille="<?php echo isset($form_values['achat_bouteille']) && $form_values['achat_bouteille'] ? 0: 1; ?>"
+                                         data-idBouteille="<?php echo isset($id_bouteille) ? $id_bouteille: 0; ?>"
+                                         data-idCellier=" <?php echo isset($form_values['id_cellier']) ? $form_values['id_cellier']: 0; ?>"
+                                         data-vinoId=" <?php echo isset($vino_id) ? $vino_id: 0; ?>"
                                    >
                                        <i class="fa fa-shopping-cart" aria-hidden="true"></i>&nbsp;
                                        <?php echo isset($form_values['achat_bouteille']) && $form_values['achat_bouteille']
@@ -1571,7 +1579,7 @@ function home_base_url(){
             <h4 class="text-center">Annulation réussie, Voulez-vous rester sur catte page?</h4>
 
             <div class="submit-bloc">
-                <button onclick="history.back()" type="button" class="bouton-secondaire">Retour sur la page précédente</button>
+                <button data-js-retour type="button" class="bouton-secondaire">Retour sur la page précédente</button>
                 <button data-js-boutonFerme class="bouton-secondaire" id="fermerModalAnnulation">Oui, rester</button>
             </div>
 

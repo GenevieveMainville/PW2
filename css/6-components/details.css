@@ -21,6 +21,9 @@
 .fiche--fe{
     justify-content: flex-end;
 }
+.noteEtoiles{
+    display: inline-block;
+}
 
 .fiche--pb{
     padding-bottom: var(--espace-p);

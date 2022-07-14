@@ -39,6 +39,11 @@ array_walk_recursive($_POST, function (&$value) {
 //
 //}else{
 
+    /*
+     *
+     * Récupéération d'id de chaque element des listes par nom
+     *
+     */
     $list = new Lists();
 
     $pays = $list->findElementByName('pays', $_POST['pays_nom']);
@@ -122,25 +127,29 @@ array_walk_recursive($_POST, function (&$value) {
 
     $message = "Opération réussie";
 
+    /*
+    *
+    *  Boucle sur les cellier pour y gérer les quantités
+     * Et confirmer l'insertion ou bien la modification des informations
+    *
+    */
     foreach ( $_POST['celliers'] as  $key => $cellier){
         $ub = null;
 //        if($bouteille_id){
             $ub = $list->getUsagerBouteille( $cellier['id_bouteille'], $cellier['id_cellier']);
 //        }
-        echo "<br>";
-        echo "bouteille ".$cellier['id_bouteille']."<br>";
-
-        echo "<br>";
-        echo  "cellier ".$cellier['id_cellier'];
-        echo "<br> usager bouteille ";
-        print_r($ub);
-        echo "<br>";
 
         if($debug){
              echo "<br><br>";
             print_r($ub);
             echo "<br><br>";
         }
+        /*
+         *
+         * Si pas existance de l'usager bouteille on aura une insertion
+         * Si existannce on est dans la modification
+         *
+         */
         if(!$ub){
             if(!isset($cellier['quantite']) || !$cellier['quantite']){
                 continue;
@@ -313,7 +322,6 @@ array_walk_recursive($_POST, function (&$value) {
                 $query_string_commentaire = "UPDATE  usager__bouteille SET commentaires = '".$_POST['commentaires']."' ".
                     "WHERE id_bouteille=".$_POST['id_bouteille'];
                 $res = MonSQL::getInstance()->query($query_string_commentaire) or die(mysqli_error(MonSQL::getInstance()));
-
             }
             echo "<br>".intval($ub[0]['quantite_bouteille'])." -- ".intval($cellier['quantite']). "<br>";
             if(intval($ub[0]['quantite_bouteille']) && intval($cellier['quantite'])){
@@ -338,7 +346,6 @@ array_walk_recursive($_POST, function (&$value) {
                 $usager_bouteille_id = $ub[0]['id_bouteille'];
             }
 
-            echo "ACTION: ".$action." user ".$_SESSION['utilisateur']['id']. " ub= ".$usager_bouteille_id;
 
             // lors de l'ajout ou la modification dans l'usager_bouteille on ajoute une ligne dans bouteille_action
             if($action && $action_quatite && $_SESSION['utilisateur']['id'] && $usager_bouteille_id ){

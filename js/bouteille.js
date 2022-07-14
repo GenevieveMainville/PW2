@@ -32,8 +32,8 @@ function ratestar(note, id_bouteille, id_cellier) {
             console.log('resultat', data);
         }).finally(() => {
            // for($i = 1; $i <= 5; $i++)
-           // location.reload();
-           injecterEtoile()
+           location.reload();
+           // injecterEtoile()
         });
     }
 }
@@ -201,6 +201,68 @@ window.addEventListener('load', function () {
         const fermerModalAnnulation = document.getElementById("fermerModalAnnulation");
         const shareFacebook = document.getElementById("shareFacebook");
         const shareTwitter = document.getElementById("shareTwitter");
+        const favoriBtn = document.getElementById("favoriBtn");
+        const essayerBtn = document.getElementById("essayerBtn");
+        const acheterBtn = document.getElementById("acheterBtn");
+        const noteEtoiles = document.getElementsByClassName("noteEtoiles");
+        // const noteEtoiles_vide = document.getElementById("noteEtoiles_vide");
+        const retourBtn = document.querySelector('[data-js-retour]');
+
+        if(retourBtn){
+            retourBtn.addEventListener('click', function (){
+               history.back();
+            });
+        }
+        if(noteEtoiles){
+            console.log('noteEtoiles', noteEtoiles);
+            Array.from(noteEtoiles).forEach(el => {
+                el.addEventListener('click', function (e){
+                   const valeur =  Number(el.getAttribute('data-etoile-value'));
+                   const id_bouteille =  Number(el.getAttribute('data-idBouteille'));
+                   const id_cellier =  Number(el.getAttribute('data-idCellier'));
+                   console.log('ratestar', valeur, id_bouteille, id_cellier);
+                   ratestar(valeur, id_bouteille, id_cellier);
+                });
+            })
+
+        }
+        // if(noteEtoiles_vide){
+        //     noteEtoiles_vide.addEventListener('click', function (e){
+        //        const valeur =  Number(noteEtoiles_vide.getAttribute('data-etoile-value'));
+        //        const id_bouteille =  Number(noteEtoiles_vide.getAttribute('data-idBouteille'));
+        //        const id_cellier =  Number(noteEtoiles_vide.getAttribute('data-idCellier'));
+        //        console.log('ratestar', valeur, id_bouteille, id_cellier);
+        //        ratestar(valeur, id_bouteille, id_cellier);
+        //     });
+        // }
+        if(favoriBtn){
+            favoriBtn.addEventListener('click', function (e){
+               const valeur =  Number(favoriBtn.getAttribute('data-favoriBouteille'));
+               const id_bouteille =  Number(favoriBtn.getAttribute('data-idBouteille'));
+               const id_cellier =  Number(favoriBtn.getAttribute('data-idCellier'));
+               const vino_id =  Number(favoriBtn.getAttribute('data-vinoId'));
+               modifierFavoris(valeur, id_bouteille, id_cellier, vino_id);
+            });
+        }
+        if(essayerBtn){
+            essayerBtn.addEventListener('click', function (e){
+               const valeur =  Number(essayerBtn.getAttribute('data-essayerBouteille'));
+               const id_bouteille =  Number(essayerBtn.getAttribute('data-idBouteille'));
+               const id_cellier =  Number(essayerBtn.getAttribute('data-idCellier'));
+               const vino_id =  Number(essayerBtn.getAttribute('data-vinoId'));
+               modifierAEssayer(valeur, id_bouteille, id_cellier, vino_id);
+            });
+        }
+        if(acheterBtn){
+            acheterBtn.addEventListener('click', function (e){
+               const valeur =  Number(acheterBtn.getAttribute('data-achatBouteille'));
+               const id_bouteille =  Number(acheterBtn.getAttribute('data-idBouteille'));
+               const id_cellier =  Number(acheterBtn.getAttribute('data-idCellier'));
+               const vino_id =  Number(acheterBtn.getAttribute('data-vinoId'));
+               modifierAAcheter(valeur, id_bouteille, id_cellier, vino_id);
+            });
+        }
+
         document.querySelectorAll(".cellier-block").forEach(element => {
             element.style.display = "none";
         });
