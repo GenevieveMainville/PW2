@@ -1,6 +1,7 @@
 * {
     box-sizing: border-box;
     font-family: var(--police-texte);
+  
 }
 
 
@@ -53,4 +54,5 @@ footer{
 input{
     outline: none;
     border: none;
+    font-size: 16px;
 }

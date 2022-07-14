@@ -24,7 +24,7 @@ class Modele
     {
 
       $this->_db = MonSQL::getInstance();
-      
+      //$this->_db->set_charset('utf8');
     }
 
     public function ajusterQuantiteBouteille($id_bouteille)

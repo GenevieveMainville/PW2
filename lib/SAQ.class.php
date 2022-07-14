@@ -125,9 +125,9 @@ class SAQ extends Modele
 
         $lesAttributs = array();
         foreach ($attributs as $attribut) {
-            $lesAttributs[] = $attribut->nodeValue;
+            $lesAttributs[] = trim(utf8_encode($attribut->nodeValue));
         }
-
+      
         $bte = array();
         $bte["nom_bouteille"] = $titre;
         $bte["prix_bouteille"] = $prix;
@@ -159,6 +159,7 @@ class SAQ extends Modele
         $bte["produit_du_quebec_nom"] = NULL;
 
         for ($i = 0, $l = count($lesAttributs); $i < $l; $i++) {
+           // $lesAttributs[$i]= utf8_decode($lesAttributs[$i]);
             if (strpos($lesAttributs[$i], "Pays") !== false) {
                 $bte["pays_nom"] = trim(explode("Pays", $lesAttributs[$i])[1]);
             }
@@ -176,8 +177,10 @@ class SAQ extends Modele
             }
             if (strpos($lesAttributs[$i], "Cépages") !== false) {
                 $bte["cepage_nom"] = trim(explode("Cépages", $lesAttributs[$i])[1]);
+                //$bte["cepage_nom"] = utf8_encode($bte["cepage_nom"]);
             } else if (strpos($lesAttributs[$i], "Cépage") !== false) {
                 $bte["cepage_nom"] = trim(explode("Cépage", $lesAttributs[$i])[1]);
+                //$bte["cepage_nom"] = utf8_encode($bte["cepage_nom"]);
             }
 
             if (strpos($lesAttributs[$i], "Degré d'alcool") !== false) {

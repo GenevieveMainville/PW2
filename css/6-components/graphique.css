@@ -1,4 +1,7 @@
 .graphique__titre{
+    padding-bottom: var(--espace-l);
+}
+.graphique__stitre{
     padding-bottom: var(--espace-p);
 }
 .graphique--police{
@@ -9,9 +12,9 @@
     border: 1px solid;
     padding: var(--espace-p);
 }
-@media only screen and (min-width: 1200px) {
+@media only screen and (min-width: 1024px) {
     .graphique{
-        width: 70%;
+        width: 60%;
     }
 }
 .graphique li { 
@@ -34,7 +37,7 @@ z-index: 2;
 margin: var(--espace-xp) 0;
 }
 .graphique div{
-    min-width: 70px;
+    min-width: 80px;
 }
 .graphique .index { 
 display: block;  
@@ -60,7 +63,7 @@ margin-top: 50px;
     height:200px;
 }
 .graphique-vertical span{
-    margin: 0 var(--espace-p);
+    margin: 0 var(--espace-xp);
     display: block;
     text-align: center;
 }
@@ -71,26 +74,22 @@ margin-top: 50px;
    
 .graphique--police{
     font-size: var(--police-xp);
-    
-}
-.graphique--pd{
     padding-left: var(--espace-xp);
 }
-.graphique__contenant--bordure{
-    border: 1px solid;
+.graphique--policel{
+    font-size: var(--police-xp);
+    font-weight: var(--police-gras);
 }
 
+
 .graphique__contenant{
-   padding: var(--espace-p);
+    border: 1px solid;
+    padding: var(--espace-p);
     overflow-x: auto;
     white-space: nowrap;
-    width: 99.9%;
 }
-@media only screen and (min-width: 1200px) {
+@media only screen and (min-width: 1024px) {
     .graphique__contenant{
-        width: 70%;
+        width: 60%;
     }
-}
-.graphique--gras{
-    font-weight: var(--police-gras);
 }

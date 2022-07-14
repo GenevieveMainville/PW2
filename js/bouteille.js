@@ -144,6 +144,7 @@ window.addEventListener('load', function () {
 
                             if (key === 'image_bouteille') {
                                 const image_bouteille = document.getElementById(key);
+                                console.log()
                                 if (data['image_bouteille']) {
                                     image_bouteille.src = data['image_bouteille'];
                                 } else if (data['image_url']) {

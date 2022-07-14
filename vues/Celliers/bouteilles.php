@@ -3,6 +3,8 @@
     <!--ENTETE Titre et bouton (+)-->
     <div class="carte__entete-bouton">
         <h3 class="carte__entete"><?php echo $nom_cellier ?></h3>
+            
+            
         <input type="hidden" value="<?php echo $id_cellier; ?>" data-js-id-cellier>
 
         <!--BOUTON ajouter une nouvelle bouteille-->
@@ -70,7 +72,7 @@
                                 </div>
                                 <!--NOTE bouteille-->
                                 <div class="carte__texte">
-                                    Ma note est de <?php echo $bouteille['note']; ?>/10
+                                    Ma note est de <?php echo $bouteille['note']; ?>/5
                                 </div>
                             </div>
                         </div>

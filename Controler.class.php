@@ -25,7 +25,7 @@ class Controler
             case 'mesCelliers': //gm
                 $this->listeCelliers();
                 break;
-            case 'celliers':
+            case 'celliers'://gm
                 $this->listerCelliers();
                 break;
             case 'ajouterNouveauCellier': //gm
@@ -49,12 +49,6 @@ class Controler
             case 'reduireQteBouteille': //gm
                 $this->reduireQteBouteille();
                 break;
-            case 'autocompleteBouteille':
-                $this->autocompleteBouteille();
-                break;
-            case 'ajouterNouvelleBouteilleCellier':
-                $this->ajouterNouvelleBouteilleCellier();
-                break;
             case 'listes': //gm
                 $this->listes();
                 break;
@@ -73,14 +67,8 @@ class Controler
             case 'modifierFavoris': //fr
                 $this->modifierFavoris();
                 break;
-            case 'ajouterBouteilleCellier':
-                $this->ajouterBouteilleCellier();
-                break;
             case 'detruireBouteille': //detruire une bouteille from cellier
                 return $this->detruireBouteille();
-                break;
-            case 'boireBouteilleCellier':
-                $this->boireBouteilleCellier();
                 break;
             case 'getBouteille': //fr
                 $this->getBouteille();
@@ -788,7 +776,10 @@ class Controler
                 foreach ($actionsAjouts as $achetees) {
                     $bouteillesAchetees += $achetees['quantite_bouteille'];
                 }
+
+                include("vues/entete.php");
                 include("vues/index.php");
+                include("vues/pied.php");
             }
         } else {
             include("vues/entete.php");
@@ -797,14 +788,6 @@ class Controler
         }
     }
 
-
-    private function ajouterBouteilleCellier()
-    {
-        $body = json_decode(file_get_contents('php://input'));
-
-        $bte = new Bouteille();
-        $resultat = $bte->modifierQuantiteBouteilleCellier($body->id_usager, $body->id, 1, "a");
-    }
 
 
     /**
@@ -827,26 +810,6 @@ class Controler
     }
 
 
-    private function ajouterNouvelleBouteilleCellier()
-    {
-        $id_cellier = $_GET['id_cellier'];
-
-        $body = json_decode(file_get_contents('php://input'));
-
-        if (!empty($body)) {
-            $bte = new Bouteille();
-            //var_dump($_POST['data']);
-
-            //var_dump($data);
-            $resultat = $bte->ajouterBouteilleCellier($body);
-            // echo json_encode($resultat);
-        } else {
-            include("vues/entete.php");
-            include("vues/ajouter.php");
-            include("vues/pied.php");
-        }
-    }
-
 
     /**
      * Cette méthode appelle la fonction pour récupérer la liste des bouteilles dans un cellier
@@ -862,26 +825,6 @@ class Controler
         $resultat = $bte->modifierQuantiteBouteilleCellier($id_usager, $body->id, 1, "a");
     }
 
-
-    private function autocompleteBouteille()
-    {
-        $bte = new Bouteille();
-        //var_dump(file_get_contents('php://input'));
-        $body = json_decode(file_get_contents('php://input'));
-        //var_dump($body);
-        $listeBouteille = $bte->autocomplete($body->nom);
-
-        // echo json_encode($listeBouteille);
-    }
-
-
-    private function boireBouteilleCellier()
-    {
-        $body = json_decode(file_get_contents('php://input'));
-
-        $bte = new Bouteille();
-        $resultat = $bte->modifierQuantiteBouteilleCellier($body->id_usager, $body->id, 1, "d");
-    }
 
 
     private function connecterUtilisateur()
@@ -906,11 +849,7 @@ class Controler
         include("vues/pied.php");
     }
 
-    /**
-     * Cette méthode déplace toutes les bouteilles d'un cellier à l'autre selon l'id_cellier choisi
-     * et supprime le cellier selon l'id_cellier envoyé dans l'url 
-     *  
-     */
+    
     /**
      * Cette méthode déplace toutes les bouteilles d'un cellier à l'autre selon l'id_cellier choisi
      * et supprime le cellier selon l'id_cellier envoyé dans l'url 
@@ -1182,6 +1121,7 @@ class Controler
         return $this->returnJsonHttpResponse(false, null);
     }
 
+
     /**
      * Cette méthode appelle la fonction pour récupérer la liste des bouteilles dans un cellier
      *  selon l'id_cellier envoyé dans l'url, ou la quantité_bouteille est plus grande que 0, trié DESC selon l'id_bouteille 
@@ -1214,6 +1154,8 @@ class Controler
         include("vues/listes.php");
         include("vues/pied.php");
     }
+
+
     /**
      * Cette méthode récupère la liste des celliers d'un usager ainsi que le nombre de cellier par usager
      * avec l'id session de l'usager
@@ -1342,7 +1284,7 @@ class Controler
     }
 
     /**
-     * Cette méthode réduit la quantité d'une bouteille donnée dans un cellier
+     * Cette méthode réduit la quantité d'une bouteille (-1) dans un cellier
      * 
      *  
      */
@@ -1384,6 +1326,12 @@ class Controler
         exit();
     }
 
+
+    /**
+     * Cette méthode récupère l'id d'une bouteille lors du scan du code barre
+     * 
+     *  
+     */
     private function scan()
     {
         header('Content-Type: application/json');
@@ -1391,11 +1339,6 @@ class Controler
 
         $id_bouteille = new Cellier;
         $id = $id_bouteille->getBouteilleCUP($body->scan_resultat);
-
-        //$objet = json_encode($id,true);
-        //var_dump($objet);
-
-        //exit(header("Location:index.php?requete=bouteille&vino_id=".$id));
 
         echo json_encode($id);
     }
@@ -1406,7 +1349,6 @@ class Controler
      */
     private function statistiquesUtilisateur()
     {
-
 
         $jan = $fev = $mar = $avr = $mai = $jun = $jui = $aout = $sept = $oct = $nov = $dec = 0;
         $mois = [
@@ -1443,7 +1385,6 @@ class Controler
         }
         $total = $prix_total * $bouteille_total;
 
-        //echo json_encode($data);
 
 
         $stats = new Statistique();
@@ -1484,12 +1425,14 @@ class Controler
                 }
             }
         }
+        //INFO BOUTEILLES
         $bouteilles = $stats->getInfosBouteilleUsager($id_usager, $id_cellier);
         include("vues/entete.php");
         include("vues/statistiques.php");
         include("vues/pied.php");
     }
 
+    
     /**
      * Cette méthode supprime un cellier selon l'id envoyé dans l'url
      *  

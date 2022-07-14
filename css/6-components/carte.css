@@ -17,6 +17,9 @@
     display: flex;
     justify-content: space-between;
 }
+.carte__entete-icone{
+    justify-content: space-between;
+}
 
 /* || Contenu*/
 .carte__contenu {

@@ -6,7 +6,6 @@ export default class CellierValidation{
         this._elNom_cellier = this._el.querySelector("[name='nom_cellier_modal']")
         this._elType_cellier_id = this._el.querySelectorAll("[name='type_cellier_id']")
         this._elDescription_cellier = this._el.querySelector("[name='description_cellier']")
-        
         this._radio = false
         this._estValide = true
         this.id_cellier = ""

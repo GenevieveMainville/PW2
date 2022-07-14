@@ -29,3 +29,6 @@
 .nav-mobile__icone-milieu{
     fill: var(--couleur-accent);
 }
+.nav-mobile__svg{
+    width: 1.2rem;
+}

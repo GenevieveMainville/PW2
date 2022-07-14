@@ -5,7 +5,7 @@ export default class ModalCellier{
         this._elModalContenu = document.querySelector('[data-js-modalcontenu]')
     }
     
-
+    //OUVERTURE
      ouvre = () =>{
         if (this._elModal.classList.contains('modal--ferme')) {
             this._elModal.classList.replace('modal--ferme', 'modal--ouvre');
@@ -16,6 +16,7 @@ export default class ModalCellier{
         }
     }
     
+    //FERMETURE
     ferme = () =>{
         if (this._elModal.classList.contains('modal--ouvre')) {
             this._elModal.classList.replace('modal--ouvre', 'modal--ferme');
@@ -25,6 +26,8 @@ export default class ModalCellier{
             document.body.classList.remove('overflow-y--hidden');
         }
     }
+
+    //ANNULATION
     annule = (bouton) =>{
         this._elAnnulercellier.addEventListener('click', (e) => {
             e.preventDefault();
@@ -34,6 +37,7 @@ export default class ModalCellier{
         });
     }
 
+    //MODAL CONTENU AJOUTER OU MODIFIER
     modal = (titre,bouton) =>{
         this._elModalContenu.innerHTML = `
             <!--TITRE-->
@@ -70,6 +74,7 @@ export default class ModalCellier{
         `
     }
 
+    //MODAL CONTENU SUPPRIMER
     modalsupprimer = (titre) =>{
 
         this._elModalContenu.innerHTML = `<h4 class=""><span class="carte__erreur">Supprimer le cellier</span> "${titre}" ?</h4>

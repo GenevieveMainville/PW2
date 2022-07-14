@@ -31,24 +31,6 @@ class Usager extends Modele
     }
 
 
-    public function modifierAdminUsager($donnees)
-    {
-        $requete = "UPDATE usager__detail SET 
-                            nom = '{$donnees->nom}',
-                            adresse = '{$donnees->adresse}',
-                            telephone = '{$donnees->telephone}',
-                            courriel = '{$donnees->courriel}',
-                            date_naissance = '{$donnees->date_naissance}',
-                            ville = '{$donnees->ville}',
-                            nom_utilisateur = '{$donnees->nom_utilisateur}',
-                            type_utilisateur = '{$donnees->type_utilisateur}'
-                    WHERE id = '{$donnees->id}'";
-
-        $res = $this->_db->query($requete);
-        return $res;
-    }
-
-
     public function ajouterUsager($donnees)
     {
         $requete = "INSERT INTO usager__detail (nom, adresse, telephone, courriel, date_naissance, ville, pays_id, nom_utilisateur, mot_de_passe, type_utilisateur, jeton, date_creation, date_modification) 
@@ -66,7 +48,7 @@ class Usager extends Modele
             "'{$donnees->jeton}'," .
             "'{$donnees->date_creation}'," .
             "'{$donnees->date_modification}')";
-var_dump($requete);
+
         $res = $this->_db->query($requete);
         return $res;
     }
@@ -168,6 +150,24 @@ var_dump($requete);
         }
 
         return $rows;
+    }
+
+
+    public function modifierAdminUsager($donnees)
+    {
+        $requete = "UPDATE usager__detail SET 
+                            nom = '{$donnees->nom}',
+                            adresse = '{$donnees->adresse}',
+                            telephone = '{$donnees->telephone}',
+                            courriel = '{$donnees->courriel}',
+                            date_naissance = '{$donnees->date_naissance}',
+                            ville = '{$donnees->ville}',
+                            nom_utilisateur = '{$donnees->nom_utilisateur}',
+                            type_utilisateur = '{$donnees->type_utilisateur}'
+                    WHERE id = '{$donnees->id}'";
+
+        $res = $this->_db->query($requete);
+        return $res;
     }
 
 

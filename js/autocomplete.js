@@ -26,20 +26,23 @@ window.addEventListener( 'load', function() {
 
         const elementList = document.getElementById(list);
         // on override comportement par défaut des data-list pour faire notre custom automplete
-
+       
         if(elementList){
             const initialOptions = elementList.children;
             let initialOptionValue = [];
             for ( let i = 0; i < initialOptions.length; i++ ) initialOptionValue.push(initialOptions[i].value);
             let customOptions;
             const inputElement =  document.getElementById(input);
+           
             if(inputElement){
                 inputElement.addEventListener('input',  event => {
+                    
                     const inputValue = inputElement.value;
                     const actualOptions =  [...initialOptions] ;//document.getElementsByTagName("option");
                     if ( inputValue !== '' && inputValue !== 'undefined') {
                         customOptions = '';
                         for ( let i = 0; i < actualOptions.length; i++ ) {
+                       
                             if ( actualOptions[i].value.toLowerCase().startsWith(inputValue.toLowerCase())) {
                                 customOptions += '<option value="' + actualOptions[i].value + '" />';
                             }

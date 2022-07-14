@@ -71,27 +71,30 @@ elTablesVino.addEventListener("click", () => {
 });
 
 elBouteilles.addEventListener("click", () => {
-    cacherSection1();
+    cacherSection2();
     selectionnerCarte(elBouteilles);
 
     traiterProchaineAction({ "nomTable": "bouteille" });
 });
 
 elCelliers.addEventListener("click", () => {
-    cacherSection1();
+    cacherSection2();
     selectionnerCarte(elCelliers);
 
     traiterProchaineAction({ "nomTable": "cellier" });
 });
 
 elUsagers.addEventListener("click", () => {
-    cacherSection1();
+    cacherSection2();
     selectionnerCarte(elUsagers);
 
     traiterProchaineAction({ "nomTable": "usager" });
 });
 
 
+/**
+ * Fonction qui construit le formulaire détaillant toutes les infos de l'enregistrement sélectionné.
+ */
 function afficherDetail(body) {
     let requete = "";
 
@@ -183,7 +186,7 @@ function afficherDetail(body) {
 
 
 /**
- * Fonction qui construit la liste qui contient toutes les bouteilles
+ * Fonction qui construit le formulaire détaillant toues les enregistrements de la table sélectionnée.
  */
 function afficherFormulaire() {
     let body = "",
@@ -285,6 +288,9 @@ function afficherFormulaire() {
 }
 
 
+/**
+ * Affiche la 2e section, soit celle qui montre la liste des tables Vino
+ */
 function afficherSection2() {
     let requete = "lireTableSelection";
     selectionnerCarte(elTablesVino);
@@ -406,7 +412,10 @@ function basculerFleche(event) {
 }
 
 
-function cacherSection1() {
+/**
+ * Force la section 2 (liste des tables Vino) à disparaître quand on clique une des 4 sections principales.
+ */
+function cacherSection2() {
     if (!elSection2.classList.contains("hide")) {
         elSection2.classList.add("hide");
     }
@@ -414,12 +423,18 @@ function cacherSection1() {
 }
 
 
+/**
+ * Met fin au processus d'édition lorsqu'on clique sur Annuler et qu'on confirme.
+ */
 function confirmerAnnulation() {
     gererEdition("fin");
     reinitialiserSection4();
 }
 
 
+/**
+ * On conserve les données des tables de la section 3 afin de s'en servir pour le tri.
+ */
 function conserverDonnees() {
     elTableColonnes = document.querySelectorAll(".table-colonne");
     let lesEntetes = [];
@@ -457,6 +472,9 @@ function effacerFleche() {
 }
 
 
+/**
+ * Fait disparaître le modal lorsque l'utilisateur a répondu à la question.
+ */
 function fermerModal() {
     const elModal = document.querySelector(".modal");
 
@@ -509,6 +527,9 @@ function filtrerDonnees() {
 }
 
 
+/**
+ * Gère la demande d'annulation faite par l'usager.
+ */
 function gererAnnulation() {
     const elModalMessage = document.querySelector("[data-js-modal-message]");
     const elBtnDanger = document.querySelector("[data-js-bouton-danger]");
@@ -562,6 +583,9 @@ function gererAnnulation() {
 }
 
 
+/**
+ * Gère la demande d'édition faite par l'usager.
+ */
 function gererEdition(pos) {
     let action = tableSelectionnee["actionCourante"];
     let elGroupeSAQ = document.querySelector(".groupe-ajouter-saq");
@@ -778,6 +802,9 @@ async function lireJson(reqNom, reqBody = null) {
 }
 
 
+/**
+ * Fonction qui affiche un modal lorsqu'une question sur l'édition est posée à l'utilisateur
+ */
 function ouvrirModal() {
     const elModal = document.querySelector(".modal");
 
@@ -792,6 +819,9 @@ function ouvrirModal() {
 }
 
 
+/**
+ * Fonction qui force la mise à jour des statistiques affichées lorsqu'on ajoute un enregistrement dans une table.
+ */
 function rafraichirPageInfo() {
 
     const elSelect = document.querySelector('#selection-table-vino');
@@ -806,6 +836,9 @@ function rafraichirPageInfo() {
 }
 
 
+/**
+ * Fonction qui force la mise à jour des statistiques de la section 1 lorsqu'on ajoute un enregistrement dans une table.
+ */
 function rafraichirSection1() {
     let body = "",
         requete = "obtenirTablesNbEnrg";
@@ -823,6 +856,9 @@ function rafraichirSection1() {
 }
 
 
+/**
+ * Fonction qui force la mise à jour des statistiques de la section 2 lorsqu'on ajoute un enregistrement dans une table.
+ */
 function rafraichirSection2() {
     let requete = "obtenirVinoTablesNbEnrg";
 
@@ -882,6 +918,9 @@ function rafraichirSection2() {
 }
 
 
+/**
+ * Fonction qui force la mise à jour des statistiques de la section 3 lorsqu'on ajoute un enregistrement dans une table.
+ */
 function rafraichirSection3() {
     let body = "",
         requete = "";
@@ -985,6 +1024,9 @@ function rafraichirSection3() {
 }
 
 
+/**
+ * Fonction qui force la mise à jour des statistiques de la section 4 lorsqu'on ajoute un enregistrement dans une table.
+ */
 function reinitialiserSection4() {
     if (tableSelectionnee["id"] > 0) {
         afficherDetail({ "mode": "lire", "id": tableSelectionnee["id"] });
@@ -997,6 +1039,9 @@ function reinitialiserSection4() {
 }
 
 
+/**
+ * Sauvegarde les données d'un enregistrement, suite à un ajout ou une modification.
+ */
 async function sauvegarderDonnees() {
 
     // Method
@@ -1063,6 +1108,10 @@ function selectionnerCarte(el) {
 }
 
 
+/**
+ * Ajoute la classe 'selected' à la rangée fournie en paramètre et l'enlève aux autres
+ * @param el L'élément qui doit recevoir la classe
+ */
 function selectionnerLigne(rangee) {
     rows = elTableBody.getElementsByTagName("tr");
 
@@ -1074,6 +1123,10 @@ function selectionnerLigne(rangee) {
 }
 
 
+/**
+ * Traite la prochaine action à faire basée sur ce que l'utilisateur a demandé.
+ * @param prochaineAction Un objet qui identifit la prochaine action à faire
+ */
 function traiterProchaineAction(prochaineAction) {
 
     if (prochaineAction.hasOwnProperty("nomTable")) {

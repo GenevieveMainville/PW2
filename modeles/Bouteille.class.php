@@ -184,21 +184,6 @@ class Bouteille extends Modele
     }
 
 
-    public function getListeBouteille()
-    {
-        $this->_db->set_charset('utf8');
-        $rows = array();
-        $res = $this->_db->query('Select * from ' . self::TABLE);
-        if ($res->num_rows) {
-            while ($row = $res->fetch_assoc()) {
-
-                $rows[] = $row;
-            }
-        }
-
-        return $rows;
-    }
-
 
     /**
      * Cette méthode récupère la liste des bouteilles d'un cellier d'un usager
@@ -441,7 +426,7 @@ class Bouteille extends Modele
                         LEFT JOIN vino__classification classif ON classif.id = b.classification_id
                        WHERE b.id_bouteille = '" . $vino_bouteille_id . "'";
 
-        $this->_db->set_charset('utf8');
+      
         $res =  $this->_db->query($requete) or die(mysqli_error(MonSQL::getInstance()));
         if ($res) {
 
@@ -561,7 +546,7 @@ class Bouteille extends Modele
                         LEFT JOIN vino__produit_du_quebec pc ON pc.id = b.produit_du_quebec_id
                         LEFT JOIN vino__classification classif ON classif.id = b.classification_id
                        WHERE b.nom_bouteille = '" . $nom . "'";
-        $this->_db->set_charset('utf8');
+       
         $res =  $this->_db->query($requete) or die(mysqli_error(MonSQL::getInstance()));
         if ($res) {
 
@@ -578,69 +563,6 @@ class Bouteille extends Modele
         return $rows;
     }
 
-    /**
-     * Cette méthode permet de retourner les résultats de recherche pour la fonction d'autocomplete de l'ajout des bouteilles dans le cellier
-     *
-     * @param string $nom La chaine de caractère à rechercher
-     * @param integer $nb_resultat Le nombre de résultat maximal à retourner.
-     *
-     * @throws Exception Erreur de requête sur la base de données
-     *
-     * @return array id et nom de la bouteille trouvée dans le catalogue
-     */
-
-    public function autocomplete($nom, $nb_resultat = 10)
-    {
-
-        $rows = array();
-        $nom = $this->_db->real_escape_string($nom);
-        $nom = preg_replace("/\*/", "%", $nom);
-        $this->_db->set_charset('utf8');
-        //echo $nom;
-        $requete = 'SELECT id, nom FROM vino__bouteille where LOWER(nom) like LOWER("%' . $nom . '%") LIMIT 0,' . $nb_resultat;
-        //var_dump($requete);
-        if (($res = $this->_db->query($requete)) ==     true) {
-            if ($res->num_rows) {
-                while ($row = $res->fetch_assoc()) {
-                    //$row['nom'] = trim(utf8_encode($row['nom']));
-                    $rows[] = $row;
-                }
-            }
-        } else {
-            throw new Exception("Erreur de requête sur la base de données", 1);
-        }
-
-
-        var_dump($rows);
-        return $rows;
-    }
-
-
-    /**
-     * Cette méthode ajoute une ou des bouteilles au cellier
-     *
-     * @param Array $data Tableau des données représentants la bouteille.
-     *
-     * @return Boolean Succès ou échec de l'ajout.
-     */
-    public function ajouterBouteilleCellier($data)
-    {
-        //TODO : Valider les données.
-        //var_dump($data);
-
-        $requete = "INSERT INTO vino__cellier(id_bouteille,date_achat,garde_jusqua,notes,prix,quantite,millesime) VALUES (" .
-            "'" . $data->id_bouteille . "'," .
-            "'" . $data->date_achat . "'," .
-            "'" . $data->garde_jusqua . "'," .
-            "'" . $data->notes . "'," .
-            "'" . $data->prix . "'," .
-            "'" . $data->quantite . "'," .
-            "'" . $data->millesime . "')";
-
-        $res = $this->_db->query($requete);
-
-        return $res;
-    }
 
 
 
@@ -870,7 +792,7 @@ class Bouteille extends Modele
                             note = '" . $note . "'
                             WHERE id_bouteille=" . $id_bouteille; //
 
-        $this->_db->set_charset('utf8');
+     
         $res =  $this->_db->query($query_string) or die(mysqli_error(MonSQL::getInstance()));
         if ($res) {
             return true;
@@ -892,7 +814,7 @@ class Bouteille extends Modele
             $query_string = $query_string . " AND id_cellier=" . $id_cellier;
         }
 
-        $this->_db->set_charset('utf8');
+      
         $res =  $this->_db->query($query_string) or die(mysqli_error(MonSQL::getInstance()));
         if ($res) {
             return true;
@@ -913,7 +835,7 @@ class Bouteille extends Modele
             $query_string = $query_string . " AND id_cellier=" . $id_cellier;
         }
 
-        $this->_db->set_charset('utf8');
+   
         $res =  $this->_db->query($query_string) or die(mysqli_error(MonSQL::getInstance()));
         if ($res) {
             return true;
@@ -932,7 +854,7 @@ class Bouteille extends Modele
         if ($id_cellier) {
             $query_string = $query_string . " AND id_cellier=" . $id_cellier;
         }
-        $this->_db->set_charset('utf8');
+
         $res =  $this->_db->query($query_string);
         if ($res) {
             return true;

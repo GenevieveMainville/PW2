@@ -44,7 +44,7 @@ $items = [
 $form_values = [
     'id_bouteille'  => null,
     'id_cellier' => null,
-
+    'vino_id'=> null,
     'nom_cellier' => null,
     'nom_bouteille' => null,
     'image_bouteille' => null,
@@ -120,10 +120,12 @@ foreach ($celliers as & $cellier_dans_le_compte){
    
     foreach ($usager_bouteille as $ub){
         $nom_cellier = $cellier_dans_le_compte['nom_cellier'];
+     /*
         if($cellier_dans_le_compte['id_cellier'] == $ub['id_cellier'] && $ub['id_bouteille'] == $bouteille['id_bouteille']){
             $cellier_dans_le_compte['quantite'] = $bouteille ? $ub['quantite_bouteille']: 0;
             $cellier_dans_le_compte['id_bouteille'] = $bouteille ? $ub['id_bouteille']: 0;
         }
+        */
     }
 }
 
@@ -211,10 +213,8 @@ function home_base_url(){
                                    value="<?php echo $id_cellier;?>"
                             />
                         <?php } ?>
-                        <!--   block favoris-->
 
                         
-
                         <!-- Information sur la bouteille     -->
                         <div class="form-block">
                             <h4 class="fiche__titre">Informations sur la bouteille</h4>
@@ -556,7 +556,6 @@ function home_base_url(){
                                         <div class="value input-state">
                                             <input list="taux_de_sucres"
                                                 placeholder="Sélectionner ici"
-                                                required
                                                 value="<?php echo $form_values['taux_de_sucre_nom']?>"
                                                 class="input select formulaire__champs boite-double__champs"
                                                 name="taux_de_sucre_nom" id="taux_de_sucre_nom" />
@@ -621,11 +620,11 @@ function home_base_url(){
                                                     value="<?php echo $form_values['image_bouteille']?>"
                                                     class="input formulaire__champs boite-double__champs"
                                                     placeholder="Saisir ici">
-                                                     <input type="file" style="display: none;" id="id" name="photo">
-                                             
-                                                   <label for="id" class="fiche--aligne-b"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Pro 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. --><path d="M224 128L224 0H48C21.49 0 0 21.49 0 48v416C0 490.5 21.49 512 48 512h288c26.51 0 48-21.49 48-48V160h-127.1C238.3 160 224 145.7 224 128zM96 224c17.67 0 32 14.33 32 32S113.7 288 96 288S64 273.7 64 256S78.33 224 96 224zM318.1 439.5C315.3 444.8 309.9 448 304 448h-224c-5.9 0-11.32-3.248-14.11-8.451c-2.783-5.201-2.479-11.52 .7949-16.42l53.33-80C122.1 338.7 127.1 336 133.3 336s10.35 2.674 13.31 7.125L160 363.2l45.35-68.03C208.3 290.7 213.3 288 218.7 288s10.35 2.674 13.31 7.125l85.33 128C320.6 428 320.9 434.3 318.1 439.5zM256 0v128h128L256 0z"/></svg></label>
+                                                  
                                             </div>
-            
+                                            <div class="value"style="margin-top: 10px;">
+                                            <input type="file" class="bouton" id="id" name="photo">
+                                            </div>       
                                         </div>
                                     </div>
                                     </div>
@@ -945,12 +944,12 @@ function home_base_url(){
 
 
                         <div class="row-f submit-bloc fiche--fe">
-                     <?php if((isset($id_bouteille) && $id_bouteille != null) || isset($vino_id)) {  ?>
+                     <?php if((isset($id_bouteille) && $id_bouteille != null) ) {  ?>
                      
                             <div >
                                     <div id="submit_btns" class="submit_btns">
                                         <button class="bouton-secondaire bouton-danger" type="button" id="askDeleteBtn"
-                                                style="display:  <?php if(!$form_values['id_cellier'] || !$form_values['id_bouteille'] || $form_values['vino_id']) {echo "none";}?>"
+                                                style="display:  <?php if(!$form_values['id_cellier'] || !$form_values['id_bouteille'] ) {echo "none";}?>"
                                             >Détruire</button>
                                             <?php if(!empty($celliers)) {?>
                                         <button class="bouton-secondaire" type="button" id="ouvrirFormulaire"
@@ -1291,17 +1290,14 @@ function home_base_url(){
                                     <div class="col-6 info-unit">
                                         <div class="label">Url de l'image de la bouteille</div>
                                             <div class="value fiche--flex">
+                                                
                                                 <input type="text" name="image_bouteille"
                                                     value="<?php echo $form_values['image_bouteille']?>"
                                                     class="input formulaire__champs boite-double__champs"
                                                     placeholder="Saisir ici">
-                                                     <input type="file" style="display: none;" id="id" name="photo">
-                                             
-                                                   <label for="id" class="fiche--aligne-b"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Pro 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. --><path d="M224 128L224 0H48C21.49 0 0 21.49 0 48v416C0 490.5 21.49 512 48 512h288c26.51 0 48-21.49 48-48V160h-127.1C238.3 160 224 145.7 224 128zM96 224c17.67 0 32 14.33 32 32S113.7 288 96 288S64 273.7 64 256S78.33 224 96 224zM318.1 439.5C315.3 444.8 309.9 448 304 448h-224c-5.9 0-11.32-3.248-14.11-8.451c-2.783-5.201-2.479-11.52 .7949-16.42l53.33-80C122.1 338.7 127.1 336 133.3 336s10.35 2.674 13.31 7.125L160 363.2l45.35-68.03C208.3 290.7 213.3 288 218.7 288s10.35 2.674 13.31 7.125l85.33 128C320.6 428 320.9 434.3 318.1 439.5zM256 0v128h128L256 0z"/></svg></label>
                                             </div>
                                             <div class="value"style="margin-top: 10px;">
-                                         
-                                               
+                                            <input type="file" class="bouton" id="id" name="photo">
                                             </div>
                                         </div>
                                     </div>

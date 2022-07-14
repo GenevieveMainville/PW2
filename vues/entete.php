@@ -22,8 +22,6 @@
 		<link rel="stylesheet" href="https://unpkg.com/swiper@8/swiper-bundle.min.css"/>
 
 
-		
-		<script  src="./js/Statistiques/statistiques.js"defer></script>
 		<script  src="./js/connexion.js"defer></script>
 		<script  src="./js/enregistrement.js" defer></script>
 		<script type="module" src="./js/Celliers/celliers.js" defer></script>
@@ -89,7 +87,7 @@
 			</ul>
 		</nav>
 		
-					
+		<!--Scan pour ouverture-->			
 		</header>
 		<div id="reader" ></div>
 	<main>

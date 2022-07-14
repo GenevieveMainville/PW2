@@ -410,6 +410,7 @@ class Recherche extends Modele
         return $aTauxDeSucre;
     }
 
+
     public function lireTypesVin()
     {
         // Ouvrir une nouvelle connexion au serveur MySQL
@@ -432,6 +433,7 @@ class Recherche extends Modele
 
         return $aTypesVin;
     }
+
 
     public function lireTypesCellier()
     {
@@ -457,6 +459,7 @@ class Recherche extends Modele
 
         return $aTypesCellier;
     }
+
 
     public function rechercherBouteilles($tri, $filtres)
     {

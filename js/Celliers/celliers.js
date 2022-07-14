@@ -21,9 +21,6 @@ import { fetchGetCellier } from './FetchCellier.js';
     let elNouveauCellier = document.querySelector('[data-js-nouveaucellier]'),
         elModifierCellier = document.querySelectorAll('[data-js-modifiercellier]'),
         elSupprimerCellier = document.querySelectorAll('[data-js-supprimercellier]'),
-        elTitreModal = document.querySelector('[data-js-titremodal]'),
-       // elBoutonModal = document.querySelector('[data-js-boutonmodal]'),
-        //elModalContenu = document.querySelector('[data-js-modalcontenu]'),
         elChoixTrie = document.querySelector('[data-js-triecellier]')
 
 
@@ -47,18 +44,18 @@ import { fetchGetCellier } from './FetchCellier.js';
     // Créer un cellier
     if (elNouveauCellier) {
         elNouveauCellier.addEventListener('click', (e) => {
+
             e.preventDefault();
+            //Création du modal
             let titre = "Ajouter un cellier"
             let bouton = `<button  class="bouton-secondaire" data-js-boutonAjouterCellier>Ajouter</button>`
             modal.modal(titre,bouton)
-            //Ajout titre
-            //elTitreModal.innerHTML = "Ajouter un cellier"
-            //Ajout du bouton ajouter
-            //elBoutonModal.insertAdjacentHTML("afterbegin", '<button  class="bouton-secondaire" data-js-boutonAjouterCellier>Ajouter</button>')
+            //Ouverture du modal
             modal.ouvre()
             
             let elBoutonModal = document.querySelector('[data-js-boutonmodal]')
             
+            // Comportement
             new NouveauCellier(elBoutonModal.firstElementChild);
         })
     }
@@ -75,11 +72,13 @@ import { fetchGetCellier } from './FetchCellier.js';
             let elNomCellier = elModifierCellier[i].parentNode.dataset.jsNomcellier
             let elCarte = elModifierCellier[i].parentNode.parentNode.parentNode
 
+            // Création du modal
             let titre  = `Modifier le cellier "${elNomCellier}"`;
-        
             let bouton =  `<button  class="bouton-secondaire" data-js-modifierInfosCellier>Modifier</button>`
             modal.modal(titre,bouton)
             let elModalContenu = document.querySelector('[data-js-modalcontenu]')
+
+            //Ouverture du modal
             modal.ouvre()
             
             //Contenu des champs du modal
@@ -90,7 +89,7 @@ import { fetchGetCellier } from './FetchCellier.js';
                 elCellierType = elCarte.querySelector('[data-js-type]').firstElementChild
 
             elNomCellierChamps.value = elCarte.querySelector('[data-js-nomcellier]').textContent,
-            elDescriptionCellierChamps.value = elCarte.querySelector('[data-js-descriptioncellier]').textContent,
+            elDescriptionCellierChamps.value = elCarte.querySelector('[data-js-descriptioncellier]').textContent
 
             // Type de cellier (Radio)
             elTypeCellierIdChamps.forEach(function (element) {
@@ -104,6 +103,8 @@ import { fetchGetCellier } from './FetchCellier.js';
                 }
             })
             let elBoutonModal = document.querySelector('[data-js-boutonmodal]')
+
+            //Comportement
             new ModifierCellier(elBoutonModal.firstElementChild, elIdCellier);
         })
 
@@ -115,10 +116,15 @@ import { fetchGetCellier } from './FetchCellier.js';
     for (let i = 0, l = elSupprimerCellier.length; i < l; i++) {
         elSupprimerCellier[i].addEventListener('click', (e) => {
             e.preventDefault();
+
            //Récupérer le nom du cellier
            let elNomCellier = elSupprimerCellier[i].parentNode.dataset.jsNomcellier,
            elIdCellier = elSupprimerCellier[i].dataset.jsSupprimercellier
+
+           //Création du modal
            modal.modalsupprimer(elNomCellier)
+
+           //Ouvertue du modal
             modal.ouvre()
         
 
@@ -131,6 +137,7 @@ import { fetchGetCellier } from './FetchCellier.js';
             let requete = new Request(BaseURL + "?requete=celliers")
             fetchGetCellier(requete, selectCellier, elIdCellier, elBtnDeplacerSupprimer)
 
+            //Comportement
             new SupprimerCellier(elBtnDeplacerSupprimer, elBtnSupprimer, selectCellier, elIdCellier);
         })
 
